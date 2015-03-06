@@ -1,9 +1,9 @@
 <?php
 
-namespace Scheduler;
+namespace DHTMLX_Scheduler;
 use PDO, Exception;
 
-class Connector
+class SchedulerHelperConnector
 {
     private $_dbsm, $_host, $_db_name, $_user, $_password, $_table_name;
     private $_PDO;

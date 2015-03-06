@@ -1,14 +1,9 @@
 <?php
 
-namespace Scheduler;
+namespace DHTMLX_Scheduler;
 use DateTime;
 
-interface ISchedulerDate
-{
-    static public function getDateTimestamp($date);
-}
-
-class SchedulerDate implements ISchedulerDate
+class SchedulerHelperDate
 {
     const SECONDS_IN_DAY = 86400;
     const DAYS_IN_WEEK = 7;

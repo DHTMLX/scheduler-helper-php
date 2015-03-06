@@ -1,13 +1,13 @@
 <?php
 
-namespace Scheduler;
-require_once "SchedulerDate.php";
-require_once "SchedulerHelperConnector.php";
-require_once "RecurringType.php";
+namespace DHTMLX_Scheduler;
+require_once "classes/SchedulerHelperDate.php";
+require_once "classes/SchedulerHelperConnector.php";
+require_once "classes/RecurringType.php";
 
 use PDO, Exception;
 
-abstract class DHelper extends Connector
+abstract class DHelper extends SchedulerHelperConnector
 {
 	const FLD_ID = "id";
 	const FLD_START_DATE = "start_date";
@@ -203,7 +203,7 @@ class Helper extends DHelper implements IHelper
 					".$this->getParentIdFieldName()." = '0'
 					OR (
 						".$this->getParentIdFieldName()." != '0'
-						AND ".$this->getLengthFieldName()." < '".SchedulerDate::getDateTimestamp($startDate)."'
+						AND ".$this->getLengthFieldName()." < '".SchedulerHelperDate::getDateTimestamp($startDate)."'
 					)
 				)";
 
@@ -256,10 +256,10 @@ class Helper extends DHelper implements IHelper
 		for($i = 0; $i < count($recurringDatesStamps); $i++) {
 			$preparedEventData = $recurringEventData;
 			$eventStartDateStamp = $recurringDatesStamps[$i];
-			$preparedEventData[$this->getStartDateFieldName()] = date(SchedulerDate::FORMAT_DEFAULT, $eventStartDateStamp);
+			$preparedEventData[$this->getStartDateFieldName()] = date(SchedulerHelperDate::FORMAT_DEFAULT, $eventStartDateStamp);
 
 			$eventEndDateStamp = $eventStartDateStamp + $recurringEventData[$this->getLengthFieldName()];
-			$preparedEventData[$this->getEndDateFieldName()] = date(SchedulerDate::FORMAT_DEFAULT, $eventEndDateStamp);
+			$preparedEventData[$this->getEndDateFieldName()] = date(SchedulerHelperDate::FORMAT_DEFAULT, $eventEndDateStamp);
 
 			if(isset($parentRecurringExceptions[$eventStartDateStamp])) {
 				$eventExceptionData = $parentRecurringExceptions[$eventStartDateStamp];
@@ -288,16 +288,16 @@ class Helper extends DHelper implements IHelper
 		$recurringEventsExceptions = $this->_getRecurringEventsExceptions();
 		$recurringEvents = $this->_getRecurringEventsByInterval($startDate, $endDate);
 
-		$intervalStartDateStamp = SchedulerDate::getDateTimestamp($startDate);
-		$intervalEndDateStamp = SchedulerDate::getDateTimestamp($endDate);
+		$intervalStartDateStamp = SchedulerHelperDate::getDateTimestamp($startDate);
+		$intervalEndDateStamp = SchedulerHelperDate::getDateTimestamp($endDate);
 
 		for($i = 0; $i < count($recurringEvents); $i++) {
 			$eventData = $recurringEvents[$i];
 
 			//Parse recurring data format.
 			$recurringTypeData = $eventData[$this->getRecurringTypeFieldName()];
-			$recurringStartDateStamp = SchedulerDate::getDateTimestamp($eventData[$this->getStartDateFieldName()]);
-			$recurringEndDateStamp = SchedulerDate::getDateTimestamp($eventData[$this->getEndDateFieldName()]);
+			$recurringStartDateStamp = SchedulerHelperDate::getDateTimestamp($eventData[$this->getStartDateFieldName()]);
+			$recurringEndDateStamp = SchedulerHelperDate::getDateTimestamp($eventData[$this->getEndDateFieldName()]);
 			$recurringTypeObj = new RecurringType($recurringTypeData, $recurringStartDateStamp, $recurringEndDateStamp);
 
 			//Get recurring dates by parsed format.
@@ -312,8 +312,8 @@ class Helper extends DHelper implements IHelper
 		$resultData = array();
 		for($i = 0; $i < count($recurringData); $i++) {
 			$recurringEvent = $recurringData[$i];
-			$recurringStartDateStamp = SchedulerDate::getDateTimestamp($recurringEvent[$this->getStartDateFieldName()]);
-			$recurringEndDateStamp = SchedulerDate::getDateTimestamp($recurringEvent[$this->getEndDateFieldName()]);
+			$recurringStartDateStamp = SchedulerHelperDate::getDateTimestamp($recurringEvent[$this->getStartDateFieldName()]);
+			$recurringEndDateStamp = SchedulerHelperDate::getDateTimestamp($recurringEvent[$this->getEndDateFieldName()]);
 
 			if(
 				(($intervalStartDateStamp <= $recurringStartDateStamp) && ($recurringStartDateStamp <= $intervalEndDateStamp))
@@ -385,7 +385,7 @@ class Helper extends DHelper implements IHelper
 	 * @return int
 	 */
 	public function getRecurringEndDateStr($recurringType, $startDateStr, $eventLength) {
-		$endDateStamp = RecurringType::getRecurringEndDate($recurringType, SchedulerDate::getDateTimestamp($startDateStr), $eventLength);
-		return date(SchedulerDate::FORMAT_DEFAULT, $endDateStamp);
+		$endDateStamp = RecurringType::getRecurringEndDate($recurringType, SchedulerHelperDate::getDateTimestamp($startDateStr), $eventLength);
+		return date(SchedulerHelperDate::FORMAT_DEFAULT, $endDateStamp);
 	}
 }

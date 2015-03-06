@@ -1,5 +1,5 @@
 <?php
-namespace Scheduler;
+namespace DHTMLX_Scheduler;
 use Exception;
 
 class RecurringType {
@@ -65,7 +65,6 @@ class RecurringType {
         $dataFields = array(
             self::FLD_REC_TYPE => "each",
             self::FLD_REC_TYPE_STEP => "step",
-//            self::FLD_WEEK_DAY => "day_of_week",//ToDo: delete.
             self::FLD_WEEK_NUMBER => "week_number",
             self::FLD_WEEK_DAYS_LIST => "days_of_week",
             self::FLD_REPEAT => "repeat"
@@ -236,21 +235,21 @@ class RecurringType {
         if($intervalEndDateStamp > $recurringEndDateStamp)
             $intervalEndDateStamp = $recurringEndDateStamp;
 
-        $differenceStartDates = SchedulerDate::differenceBetweenDates($intervalStartDateStamp, $recurringStartDateStamp);
-        $differenceEndDates = SchedulerDate::differenceBetweenDates($intervalEndDateStamp, $recurringEndDateStamp);
-        $dateUnits = SchedulerDate::$DATE_UNITS;
+        $differenceStartDates = SchedulerHelperDate::differenceBetweenDates($intervalStartDateStamp, $recurringStartDateStamp);
+        $differenceEndDates = SchedulerHelperDate::differenceBetweenDates($intervalEndDateStamp, $recurringEndDateStamp);
+        $dateUnits = SchedulerHelperDate::$DATE_UNITS;
 
         //Add years.
-        $recurringInterval["start_date_stamp"] = SchedulerDate::addYears($recurringStartDateStamp, $differenceStartDates[$dateUnits["year"]]);
-        $recurringInterval["end_date_stamp"] = SchedulerDate::addYears($recurringEndDateStamp, -$differenceEndDates[$dateUnits["year"]]);
+        $recurringInterval["start_date_stamp"] = SchedulerHelperDate::addYears($recurringStartDateStamp, $differenceStartDates[$dateUnits["year"]]);
+        $recurringInterval["end_date_stamp"] = SchedulerHelperDate::addYears($recurringEndDateStamp, -$differenceEndDates[$dateUnits["year"]]);
 
         //If recurring type is "year" then exit, else add months.
         if($this->getRecurringTypeValue() == self::REC_TYPE_YEAR)
             return $recurringInterval;
 
         //Add months.
-        $recurringInterval["start_date_stamp"] = SchedulerDate::addMonths($recurringInterval["start_date_stamp"], $differenceStartDates[$dateUnits["month"]]);
-        $recurringInterval["end_date_stamp"] = SchedulerDate::addMonths($recurringInterval["end_date_stamp"], -$differenceEndDates[$dateUnits["month"]]);
+        $recurringInterval["start_date_stamp"] = SchedulerHelperDate::addMonths($recurringInterval["start_date_stamp"], $differenceStartDates[$dateUnits["month"]]);
+        $recurringInterval["end_date_stamp"] = SchedulerHelperDate::addMonths($recurringInterval["end_date_stamp"], -$differenceEndDates[$dateUnits["month"]]);
         return $recurringInterval;
     }
 
@@ -262,9 +261,9 @@ class RecurringType {
      */
     private function _getRecurringDayStep($dateStamp, $recurringWeekDay)
     {
-        $weekDay = SchedulerDate::getDayOfWeek($dateStamp);
+        $weekDay = SchedulerHelperDate::getDayOfWeek($dateStamp);
         $dayStep = $recurringWeekDay - $weekDay;
-        $dayStep = ($dayStep < 0) ? (SchedulerDate::DAYS_IN_WEEK - (-$dayStep)) : $dayStep;
+        $dayStep = ($dayStep < 0) ? (SchedulerHelperDate::DAYS_IN_WEEK - (-$dayStep)) : $dayStep;
         return $dayStep;
     }
 
@@ -282,14 +281,14 @@ class RecurringType {
         if($recurringWeekDays) {
             for($i = 0; $i < count($recurringWeekDays); $i++) {
                 $dayStep = $this->_getRecurringDayStep($dateStamp, $recurringWeekDays[$i]);
-                array_push($recurringDays, SchedulerDate::addDays($dateStamp, $dayStep));
+                array_push($recurringDays, SchedulerHelperDate::addDays($dateStamp, $dayStep));
             }
         }
         //Else if recurring type has day of week and step for it, then get this day.
         elseif($this->getWeekDayValue() && $this->getWeekNumberValue()) {
             $dayStep = $this->_getRecurringDayStep($dateStamp, $this->getWeekDayValue());
-            $dayStep += (SchedulerDate::DAYS_IN_WEEK * ($this->getWeekNumberValue() - 1));
-            array_push($recurringDays, SchedulerDate::addDays($dateStamp, $dayStep));
+            $dayStep += (SchedulerHelperDate::DAYS_IN_WEEK * ($this->getWeekNumberValue() - 1));
+            array_push($recurringDays, SchedulerHelperDate::addDays($dateStamp, $dayStep));
         }
         //Else return recurring date without change.
         else
@@ -333,19 +332,19 @@ class RecurringType {
             $recurringTypeStep = $this->getRecurringTypeStepValue();
             switch($this->getRecurringTypeValue()) {
                 case self::REC_TYPE_DAY:
-                    $currentRecurringStartDateStamp = SchedulerDate::addDays($currentRecurringStartDateStamp, $recurringTypeStep);
+                    $currentRecurringStartDateStamp = SchedulerHelperDate::addDays($currentRecurringStartDateStamp, $recurringTypeStep);
                     break;
 
                 case self::REC_TYPE_WEEK:
-                    $currentRecurringStartDateStamp = SchedulerDate::addWeeks($currentRecurringStartDateStamp, $recurringTypeStep);
+                    $currentRecurringStartDateStamp = SchedulerHelperDate::addWeeks($currentRecurringStartDateStamp, $recurringTypeStep);
                     break;
 
                 case self::REC_TYPE_MONTH:
-                    $currentRecurringStartDateStamp = SchedulerDate::addMonths($currentRecurringStartDateStamp, $recurringTypeStep);
+                    $currentRecurringStartDateStamp = SchedulerHelperDate::addMonths($currentRecurringStartDateStamp, $recurringTypeStep);
                     break;
 
                 case self::REC_TYPE_YEAR:
-                    $currentRecurringStartDateStamp = SchedulerDate::addYears($currentRecurringStartDateStamp, $recurringTypeStep);
+                    $currentRecurringStartDateStamp = SchedulerHelperDate::addYears($currentRecurringStartDateStamp, $recurringTypeStep);
                     break;
             }
         }
