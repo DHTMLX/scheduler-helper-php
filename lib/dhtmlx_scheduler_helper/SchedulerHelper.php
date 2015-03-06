@@ -1,9 +1,9 @@
 <?php
 
 namespace DHTMLX_Scheduler;
-require_once "classes/SchedulerHelperDate.php";
-require_once "classes/SchedulerHelperConnector.php";
-require_once "classes/RecurringType.php";
+require_once "SchedulerHelperDate.php";
+require_once "SchedulerHelperConnector.php";
+require_once "RecurringType.php";
 
 use PDO, Exception;
 
