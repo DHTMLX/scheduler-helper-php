@@ -8,7 +8,7 @@ Sheduler Helper for PHP
 
 ### Installation
 
-	- composer 
+	- composer 'dhtmlx/scheduler-helper'
 	
 	or
 	

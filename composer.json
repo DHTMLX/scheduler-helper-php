@@ -1,23 +1,29 @@
 {
     "name": "dhtmlx/scheduler-helper",
     "description": "Helper for working with recurring events in dhtmlxScheduler.",
-    "minimum-stability": "dev",
+    "version": "1.0.0",
+    "keywords": ["dhtmlx", "helper"],
+    "license": "GNU",
+    "type": "library",
     "require": {
-        "php": ">=5.4.0",
-        "crate/crate-dbal": "~0.0.4"
+        "php": ">=5.4.0"
     },
-    "repositories": [
-	  	{
-		    "type":"git",
-		    "url":"git@github.com:DHTMLX/scheduler-helper-php.git"
-		}
-	  ],
-	  "autoload": {
-        "psr-0": {
-            "dhtmlx_scheduler_helper": "sources/dhtmlx_scheduler_helper/SchedulerHelper"
+    "autoload": {
+        "psr-4": {
+            "DHTMLX_Scheduler\\Helper\\": "dhtmlx/scheduler-helper/"
         },
         "files": [
-        	"sources/dhtmlx_scheduler_helper/SchedulerHelper.php"
+            "SchedulerHelper.php"
         ]
+    },
+    "min-stability": "dev",
+    "prefer-stable": true,
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    },
+    "config": {
+        "vendor-dir": "/"
     }
 }
