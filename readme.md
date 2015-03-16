@@ -3,102 +3,104 @@ Scheduler Helper for PHP
 
 ### Requirements
 
-	- PHP>=5.4 (PDO~)
-	- MySQL, PostgreSQL, Sqlite, etc.
+- PHP>=5.4 (PDO~)
+- MySQL, PostgreSQL, Sqlite, etc.
 
 ### Installation
  
-	- composer 'dhtmlx/scheduler-helper'
-	
-	or
-	
-	- just download the files from this repository 'git@github.com:DHTMLX/scheduler-helper-php.git'
-	
-	require_once "./SchedulerHelper.php";
-	use Scheduler\Helper;
+- composer 'dhtmlx/scheduler-helper'
+  
+or
+  
+- just download the files from this repository 'git@github.com:DHTMLX/scheduler-helper-php.git'
+  
+```php
+require_once "./SchedulerHelper.php";
+use Scheduler\Helper;
+```
 
 ### How to use
 
-In order to create a helper object you should call the class constructor Scheduler\Helper::Helper([$connectorDataArray]):
+In order to create a helper object you should call the class constructor `Scheduler\Helper::Helper([$connectorDataArray]):`
 
-```
-	$helper = new Helper(
-		array(
-		    "dbsm": "mysql", // optional, "mysql" by default
-		    host: "localhost", // optional, "localhost" by default
-		    "db_name" => "scheduler_helper_db",
-		    "user" => "root",
-		    "password" => "root",
-		    "table_name" => "events_rec" // name of the table that contains data of recurring events 
-		)
-	);
+```php
+  $helper = new Helper(
+    array(
+      "dbsm": "mysql", // optional, "mysql" by default
+      host: "localhost", // optional, "localhost" by default
+      "db_name" => "scheduler_helper_db",
+      "user" => "root",
+      "password" => "root",
+      "table_name" => "events_rec" // name of the table that contains data of recurring events 
+    )
+  );
 ```
 
 In the helper a standard set of fields for working with a table is defined:
 
-```
-	helper::FLD_ID => "event_id",
-	helper::FLD_START_DATE => "start_date",
-	helper::FLD_END_DATE => "end_date",
-	helper::FLD_TEXT => "text",
-	helper::FLD_RECURRING_TYPE => "rec_type",
-	helper::FLD_PARENT_ID => "event_pid",
-	helper::FLD_LENGTH => "event_length"
+```php
+  helper::FLD_ID => "event_id",
+  helper::FLD_START_DATE => "start_date",
+  helper::FLD_END_DATE => "end_date",
+  helper::FLD_TEXT => "text",
+  helper::FLD_RECURRING_TYPE => "rec_type",
+  helper::FLD_PARENT_ID => "event_pid",
+  helper::FLD_LENGTH => "event_length"
 ```
 
 To redefine the helper and create new fields, you should use the method 'setFieldsNames([$fieldsDataArray])': 
 
-```
-	$helper->setFieldsNames(array(
-		$helper::FLD_RECURRING_TYPE => "my_recurring_type_field", // redefining the field 'FLD_RECURRING_TYPE'.
-		"my_property_field" // initialization of a new field
-	));
+```php
+  $helper->setFieldsNames(array(
+    $helper::FLD_RECURRING_TYPE => "my_recurring_type_field", // redefining the field 'FLD_RECURRING_TYPE'.
+    "my_property_field" // initialization of a new field
+  ));
 ```
 
 To save data to the database, use the method 'saveData([dataArray])':
 
-```
-	// To save data of the field 'FLD_RECURRING_TYPE', you can use a data array or a string in the format 'week_2_____1,3#10'.
-	$newRecurringTypeArray = array(
-		"each" => "week",
-		"step" => 2,
-		"days_of_week" => "monday,wednesday", // if the field 'week_number' is set, the field 'days_of_week' must contain only one value
-	//  "week_number" => 2,
-		"repeat" => 10
-	);
+```php
+  // To save data of the field 'FLD_RECURRING_TYPE', you can use a data array or a string in the format 'week_2_____1,3#10'.
+  $newRecurringTypeArray = array(
+    "each" => "week",
+    "step" => 2,
+    "days_of_week" => "monday,wednesday", // if the field 'week_number' is set, the field 'days_of_week' must contain only one value
+  //  "week_number" => 2,
+    "repeat" => 10
+  );
 
-	$helper->saveData(array(
-	//    $helper::FLD_ID => "20", // if you pass this field for saving, data in the database will be updated by this value, otherwise new data will be written
-		$helper::FLD_RECURRING_TYPE => $newRecurringTypeArray,
-		$helper::FLD_START_DATE => "2015-09-30 00:00:00",
-		$helper::FLD_END_DATE => $helper->getRecurringEndDateStr($newRecurringTypeArray, "2015-09-30 00:00:00", 500), // to count the end date of the recurring series, you can use the function 'getRecurringEndDateStr'
-		$helper::FLD_LENGTH => 500,
-		"my_property_field" => "Any data..." // new fields defined by the user must be presented in this way
-	));
+  $helper->saveData(array(
+  //    $helper::FLD_ID => "20", // if you pass this field for saving, data in the database will be updated by this value, otherwise new data will be written
+    $helper::FLD_RECURRING_TYPE => $newRecurringTypeArray,
+    $helper::FLD_START_DATE => "2015-09-30 00:00:00",
+    $helper::FLD_END_DATE => $helper->getRecurringEndDateStr($newRecurringTypeArray, "2015-09-30 00:00:00", 500), // to count the end date of the recurring series, you can use the function 'getRecurringEndDateStr'
+    $helper::FLD_LENGTH => 500,
+    "my_property_field" => "Any data..." // new fields defined by the user must be presented in this way
+  ));
 ```
 
 To delete data from the database, you should use the method 'deleteById([ID])':
 
-```
-	$helper->deleteById(48); // will delete data by the field 'FLD_ID'.
+```php
+  $helper->deleteById(48); // will delete data by the field 'FLD_ID'.
 ```
 
 To get data of the recurring events, use the method 'getData([$startDateStr], [$endDateStr])':
 
-```
-	$helper->getData("2015-02-10 09:00:00", "2020-01-02 07:00:00");
-	
-	// The function will return recurring events from the defined range taking into account exclusion of events series
-	// The result will look as follows:
-	//array(
-	//	array(
-	//	 "start_date" => "2015-02-13 00:00:00",
-	//	 "end_date" => "2015-02-15 00:00:00",
-	//	 "text" => "Second Friday",
-	//	 ...
-	//	),
-	//	....
-	//);
+```php
+  $helper->getData("2015-02-10 09:00:00", "2020-01-02 07:00:00");
+  
+  // The function will return recurring events from the defined range taking into account exclusion of events series
+  // The result will look as follows:
+  //array(
+  //  array(
+  //   "start_date" => "2015-02-13 00:00:00",
+  //   "end_date" => "2015-02-15 00:00:00",
+  //   "text" => "Second Friday",
+  //   ...
+  //  ),
+  //  ....
+  //);
 ```
 
 
