@@ -1,40 +1,40 @@
-Sheduler Helper for PHP
+Scheduler Helper for PHP
 ========================
 
 ### Requirements
 
 	- PHP>=5.4 (PDO~)
-	- MySQL, PostgreSQL, Sqlite and etc.
+	- MySQL, PostgreSQL, Sqlite, etc.
 
 ### Installation
-
+ 
 	- composer 'dhtmlx/scheduler-helper'
 	
 	or
 	
-	- just download the files from this repository reposetory 'git@github.com:DHTMLX/scheduler-helper-php.git'
+	- just download the files from this repository 'git@github.com:DHTMLX/scheduler-helper-php.git'
 	
 	require_once "./SchedulerHelper.php";
 	use Scheduler\Helper;
 
 ### How to use
 
-Для создания объекта хелпера необходимо вызвать конструктор класса Scheduler\Helper::Helper([$connectorDataArray]):
+In order to create a helper object you should call the class constructor Scheduler\Helper::Helper([$connectorDataArray]):
 
 ```
 	$helper = new Helper(
 		array(
-		    "dbsm": "mysql", //Необязательный параметр. По умолчанию установлено "mysql".
-		    host: "localhost", //Необязательный параметр. По умолчанию установлено "localhost".
+		    "dbsm": "mysql", // optional, "mysql" by default
+		    host: "localhost", // optional, "localhost" by default
 		    "db_name" => "scheduler_helper_db",
 		    "user" => "root",
 		    "password" => "root",
-		    "table_name" => "events_rec" //Имя таблицы в которой хранятся данные повторяющихся событий.
+		    "table_name" => "events_rec" // name of the table that contains data of recurring events 
 		)
 	);
 ```
 
-В хелпере определены стандартный набор полей для работы с таблицей:
+In the helper a standard set of fields for working with a table is defined:
 
 ```
 	helper::FLD_ID => "event_id",
@@ -46,50 +46,50 @@ Sheduler Helper for PHP
 	helper::FLD_LENGTH => "event_length"
 ```
 
-Для переопределения и создания новые полей необходимо использовать метод 'setFieldsNames([$fieldsDataArray])': 
+To redefine the helper and create new fields, you should use the method 'setFieldsNames([$fieldsDataArray])': 
 
 ```
 	$helper->setFieldsNames(array(
-		$helper::FLD_RECURRING_TYPE => "my_recurring_type_field", //Переопределение поля 'FLD_RECURRING_TYPE'.
-		"my_property_field" //Инициализация нового поля.
+		$helper::FLD_RECURRING_TYPE => "my_recurring_type_field", // redefining the field 'FLD_RECURRING_TYPE'.
+		"my_property_field" // initialization of a new field
 	));
 ```
 
-Для сохранения данных в базу необходимо использовать метод 'saveData([dataArray])':
+To save data to the database, use the method 'saveData([dataArray])':
 
 ```
-	//Для сохранения данных поля 'FLD_RECURRING_TYPE' вы можете использовать массив данных или строку формата 'week_2_____1,3#10'.
+	// To save data of the field 'FLD_RECURRING_TYPE', you can use a data array or a string in the format 'week_2_____1,3#10'.
 	$newRecurringTypeArray = array(
 		"each" => "week",
 		"step" => 2,
-		"days_of_week" => "monday,wednesday", //Если поле 'week_number' установлено, то поле 'days_of_week' должно содержать только одно значение.
+		"days_of_week" => "monday,wednesday", // if the field 'week_number' is set, the field 'days_of_week' must contain only one value
 	//  "week_number" => 2,
 		"repeat" => 10
 	);
 
 	$helper->saveData(array(
-	//    $helper::FLD_ID => "20", //Если для сохранения передавать это поле, то данные в базе данных будут обновлены по этому значению, иначе записаны новые.
+	//    $helper::FLD_ID => "20", // if you pass this field for saving, data in the database will be updated by this value, otherwise new data will be written
 		$helper::FLD_RECURRING_TYPE => $newRecurringTypeArray,
 		$helper::FLD_START_DATE => "2015-09-30 00:00:00",
-		$helper::FLD_END_DATE => $helper->getRecurringEndDateStr($newRecurringTypeArray, "2015-09-30 00:00:00", 500), //Для расчета конечной даты повторяющейся серии вы можете использовать функцию 'getRecurringEndDateStr'.
+		$helper::FLD_END_DATE => $helper->getRecurringEndDateStr($newRecurringTypeArray, "2015-09-30 00:00:00", 500), // to count the end date of the recurring series, you can use the function 'getRecurringEndDateStr'
 		$helper::FLD_LENGTH => 500,
-		"my_property_field" => "Any data..." //Новые поля определенные пользователем должны иметь такой вид.
+		"my_property_field" => "Any data..." // new fields defined by the user must be presented in this way
 	));
 ```
 
-Для удаления данных из базы данных необходимо использовать метод 'deleteById([ID])':
+To delete data from the database, you should use the method 'deleteById([ID])':
 
 ```
-	$helper->deleteById(48); //Удалит данные по полю 'FLD_ID'.
+	$helper->deleteById(48); // will delete data by the field 'FLD_ID'.
 ```
 
-Для получения данных повторяющихся событий необходимо использовать метов 'getData([$startDateStr], [$endDateStr])':
+To get data of the recurring events, use the method 'getData([$startDateStr], [$endDateStr])':
 
 ```
 	$helper->getData("2015-02-10 09:00:00", "2020-01-02 07:00:00");
 	
-	//Функция вернет повторяющиеся события по данному диапозону с учетом исключений серии событий.
-	//Результат имеет вид:
+	// The function will return recurring events from the defined range taking into account exclusion of events series
+	// The result will look as follows:
 	//array(
 	//	array(
 	//	 "start_date" => "2015-02-13 00:00:00",
@@ -104,20 +104,18 @@ Sheduler Helper for PHP
 
 ### License
 
-DHTMLX is published under the GPLv3 license.
-
-License:
-
-	Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"),
-	to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense,
-	and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-	The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
-	IN THE SOFTWARE.
-
+The MIT License
 
 Copyright (c) 2015 DHTMLX
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"),
+to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense,
+and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+IN THE SOFTWARE.
+
