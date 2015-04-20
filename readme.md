@@ -16,18 +16,18 @@ or
   
 ```php
 require_once "./SchedulerHelper.php";
-use Scheduler\Helper;
+use DHTMLX_Scheduler\Helper;
 ```
 
 ### How to use
 
-In order to create a helper object you should call the class constructor `Scheduler\Helper::Helper([$connectorDataArray]):`
+In order to create a helper object you should call the class constructor `DHTMLX_Scheduler\Helper([$connectorDataArray]):`
 
 ```php
   $helper = new Helper(
     array(
-      "dbsm": "mysql", // optional, "mysql" by default
-      host: "localhost", // optional, "localhost" by default
+      "dbsm" => "mysql", // optional, "mysql" by default
+      "host" => "localhost", // optional, "localhost" by default
       "db_name" => "scheduler_helper_db",
       "user" => "root",
       "password" => "root",
