@@ -159,11 +159,12 @@ class Helper extends DHelper implements IHelper
 			FROM
 				".$this->getTableName()."
 			WHERE
-				".$this->getRecurringTypeFieldName()." = '".RecurringType::IS_RECURRING_BREAK."'
-				OR (
-					".$this->getRecurringTypeFieldName()." = '".RecurringType::IS_RECURRING_EXCEPTION."'
-					AND ".$this->getLengthFieldName()." != '0'
-				)
+			    (
+			        " . $this->getRecurringTypeFieldName() . " = '" . RecurringType::IS_RECURRING_EXCEPTION . "'
+				    OR " . $this->getRecurringTypeFieldName() . " = '" . RecurringType::IS_RECURRING_BREAK . "'
+				    OR " . $this->getRecurringTypeFieldName() . " IS NULL
+                )
+				AND ".$this->getLengthFieldName()." > '0'
 		";
 
 		$query = $this->getPDO()->prepare($getEventsSql);
@@ -200,12 +201,15 @@ class Helper extends DHelper implements IHelper
 				".$this->getStartDateFieldName()." <= '{$endDate}'
 				AND ".$this->getEndDateFieldName()." >= '{$startDate}'
 				AND (
-					".$this->getParentIdFieldName()." = '0'
-					OR (
-						".$this->getParentIdFieldName()." != '0'
-						AND ".$this->getLengthFieldName()." < '".SchedulerHelperDate::getDateTimestamp($startDate)."'
-					)
-				)";
+				    ".$this->getRecurringTypeFieldName()." != '".RecurringType::IS_RECURRING_EXCEPTION."'
+				    AND ".$this->getRecurringTypeFieldName()." != '".RecurringType::IS_RECURRING_BREAK."'
+				    AND ".$this->getRecurringTypeFieldName()." IS NOT NULL
+				)
+				AND (
+                    ".$this->getLengthFieldName()." > '0'
+                    AND ".$this->getLengthFieldName()." < '".SchedulerHelperDate::getDateTimestamp($startDate)."'
+				)
+        ";
 
 		$query = $this->getPDO()->prepare($getEventsSql);
 		$query->execute();
