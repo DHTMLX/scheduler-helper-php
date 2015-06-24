@@ -149,11 +149,9 @@ class Helper extends DHelper implements IHelper
 
     /**
      * Get recurring events data exceptions. And prepare data to format: []
-     * @param $startDate
-     * @param $endDate
      * @return array
      */
-	private function _getRecurringEventsExceptionsByInterval($startDate, $endDate)
+	private function _getRecurringEventsExceptionsByInterval()
 	{
 		$getEventsSql = "
 			SELECT
@@ -161,9 +159,7 @@ class Helper extends DHelper implements IHelper
 			FROM
 				".$this->getTableName()."
 			WHERE
-				".$this->getStartDateFieldName()." <= '{$endDate}'
-				AND ".$this->getEndDateFieldName()." >= '{$startDate}'
-			    AND (
+			    (
 			        ".$this->getRecurringTypeFieldName()." = '".RecurringType::IS_RECURRING_EXCEPTION."'
 				    OR ".$this->getRecurringTypeFieldName()." = '".RecurringType::IS_RECURRING_BREAK."'
 				    OR ".$this->getRecurringTypeFieldName()." IS NULL
@@ -201,8 +197,16 @@ class Helper extends DHelper implements IHelper
 			FROM
 				".$this->getTablename()."
 			WHERE
-				".$this->getStartDateFieldName()." <= '{$endDate}'
-				AND ".$this->getEndDateFieldName()." >= '{$startDate}'
+			    (
+                    (
+                        ".$this->getStartDateFieldName()." >= '{$startDate}'
+                        AND ".$this->getStartDateFieldName()." <= '{$endDate}'
+                    )
+                    OR (
+                        ".$this->getEndDateFieldName()." >= '{$startDate}'
+                        AND ".$this->getEndDateFieldName()." <= '{$endDate}'
+                    )
+                )
 				AND (
 				    ".$this->getRecurringTypeFieldName()." = '".RecurringType::IS_RECURRING_EXCEPTION."'
 				    OR ".$this->getRecurringTypeFieldName()." = '".RecurringType::IS_RECURRING_BREAK."'
@@ -223,15 +227,23 @@ class Helper extends DHelper implements IHelper
 	 * @return array
 	 */
 	private function _getRecurringEventsByInterval($startDate, $endDate)
-	{
+    {
         $getEventsSql = "
 			SELECT
 				*
 			FROM
 				".$this->getTablename()."
 			WHERE
-                ".$this->getStartDateFieldName()." >= '{$startDate}'
-                AND ".$this->getEndDateFieldName()." <= '{$endDate}'
+			    (
+                    (
+                        ".$this->getStartDateFieldName()." >= '{$startDate}'
+                        AND ".$this->getStartDateFieldName()." <= '{$endDate}'
+                    )
+                    OR (
+                        ".$this->getEndDateFieldName()." >= '{$startDate}'
+                        AND ".$this->getEndDateFieldName()." <= '{$endDate}'
+                    )
+                )
                 AND (
 				    ".$this->getRecurringTypeFieldName()." != '".RecurringType::IS_RECURRING_EXCEPTION."'
 				    AND ".$this->getRecurringTypeFieldName()." != '".RecurringType::IS_RECURRING_BREAK."'
@@ -318,7 +330,7 @@ class Helper extends DHelper implements IHelper
 	public function getData($startDate, $endDate)
 	{
 		$eventsData = array();
-		$recurringEventsExceptions = $this->_getRecurringEventsExceptionsByInterval($startDate, $endDate);
+		$recurringEventsExceptions = $this->_getRecurringEventsExceptionsByInterval();
 		$recurringEvents = $this->_getRecurringEventsByInterval($startDate, $endDate);
 
 		$intervalStartDateStamp = SchedulerHelperDate::getDateTimestamp($startDate);

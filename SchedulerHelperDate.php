@@ -35,7 +35,7 @@ class SchedulerHelperDate
     static public function getDateTimestamp($date)
     {
         $parsedDate = date_parse($date);
-        return mktime(
+        return gmmktime(
             $parsedDate["hour"],
             $parsedDate["minute"],
             $parsedDate["second"],
