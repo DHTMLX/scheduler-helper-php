@@ -34,6 +34,7 @@ abstract class DHelper extends SchedulerHelperConnector
 		"debug" => true
 	);
 
+    protected $_mapped_fields = array();
 	protected function getIdFieldName()
 	{
 		return $this->getFieldsNames(self::FLD_ID);
@@ -95,6 +96,8 @@ abstract class DHelper extends SchedulerHelperConnector
 	{
 		if(!is_array($fieldsDataArray))
 			throw new Exception("Fields data must be array.");
+
+        $this->_mapped_fields = $fieldsDataArray;
 
 		foreach($fieldsDataArray as $fieldKey => $fieldValue) {
 			//If field name is numeric, then made same field key and field value.
@@ -266,12 +269,16 @@ class Helper extends DHelper implements IHelper
 	{
 		$filteredEventData = array();
 		foreach($eventDataArray as $dataKey => $dataValue) {
+            $mappedFieldsValues = array_flip($this->_mapped_fields);
 			switch($dataKey) {
 				case $this->getIdFieldName():
 				case $this->getRecurringTypeFieldName():
 				case $this->getParentIdFieldName():
 				case $this->getLengthFieldName():
-					continue;
+                    if(!array_key_exists($dataKey, $mappedFieldsValues))
+                        continue;
+
+                    $filteredEventData[$dataKey] = $dataValue;
 					break;
 
 				default:
