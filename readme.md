@@ -57,6 +57,15 @@ To redefine the helper and create new fields, you should use the method 'setFiel
   ));
 ```
 
+For getting only fields that have set, you need just to set 'true' like second parameter in the function 'setFieldsNames([$fieldsDataArray], true)'
+
+```php
+  $helper->setFieldsNames(array(
+    $helper::FLD_RECURRING_TYPE => "my_recurring_type_field", // redefining the field 'FLD_RECURRING_TYPE'.
+    "my_property_field" // initialization of a new field
+  ), true);
+```
+
 To save data to the database, use the method 'saveData([dataArray])':
 
 ```php

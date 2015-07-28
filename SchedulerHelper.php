@@ -35,6 +35,9 @@ abstract class DHelper extends SchedulerHelperConnector
 	);
 
     protected $_mapped_fields = array();
+
+    protected $_use_only_mapped_fields = false;
+
 	protected function getIdFieldName()
 	{
 		return $this->getFieldsNames(self::FLD_ID);
@@ -92,12 +95,13 @@ abstract class DHelper extends SchedulerHelperConnector
 		return $this->_fields_names[$field];
 	}
 
-	public function setFieldsNames($fieldsDataArray)
+	public function setFieldsNames($fieldsDataArray, $useOnlySetFields = false)
 	{
 		if(!is_array($fieldsDataArray))
 			throw new Exception("Fields data must be array.");
 
         $this->_mapped_fields = $fieldsDataArray;
+        $this->_use_only_mapped_fields = $useOnlySetFields;
 
 		foreach($fieldsDataArray as $fieldKey => $fieldValue) {
 			//If field name is numeric, then made same field key and field value.
@@ -268,26 +272,24 @@ class Helper extends DHelper implements IHelper
 	private function _filterEventDataToResponse($eventDataArray)
 	{
 		$filteredEventData = array();
+        $fullEventData = array();
+
 		foreach($eventDataArray as $dataKey => $dataValue) {
             $mappedFieldsValues = array_flip($this->_mapped_fields);
-			switch($dataKey) {
-				case $this->getIdFieldName():
-				case $this->getRecurringTypeFieldName():
-				case $this->getParentIdFieldName():
-				case $this->getLengthFieldName():
-                    if(!array_key_exists($dataKey, $mappedFieldsValues))
-                        continue;
+            $fullEventData[$dataKey] = $dataValue;
 
-                    $filteredEventData[$dataKey] = $dataValue;
-					break;
-
-				default:
-					$filteredEventData[$dataKey] = $dataValue;
-					break;
-			}
+            if(
+                ($this->_use_only_mapped_fields && array_key_exists($dataKey, $mappedFieldsValues))
+                || !$this->_use_only_mapped_fields
+            ) {
+                $filteredEventData[$dataKey] = $dataValue;
+            }
 		}
 
-		return $filteredEventData;
+//        $this->_use_only_mapped_fields
+
+//        var_dump($filteredEventData);exit;
+		return array("filtered_event_data" => $filteredEventData, "full_event_data" => $fullEventData);
 	}
 
 	/**
@@ -368,14 +370,15 @@ class Helper extends DHelper implements IHelper
 		$resultData = array();
 		for($i = 0; $i < count($eventsData); $i++) {
 			$eventData = $eventsData[$i];
-			$recurringStartDateStamp = SchedulerHelperDate::getDateTimestamp($eventData[$this->getStartDateFieldName()]);
-			$recurringEndDateStamp = SchedulerHelperDate::getDateTimestamp($eventData[$this->getEndDateFieldName()]);
+            $fullEventData = $eventData["full_event_data"];
+            $recurringStartDateStamp = SchedulerHelperDate::getDateTimestamp($fullEventData[$this->getStartDateFieldName()]);
+            $recurringEndDateStamp = SchedulerHelperDate::getDateTimestamp($fullEventData[$this->getEndDateFieldName()]);
 
-			if(
+            if(
 				(($intervalStartDateStamp <= $recurringStartDateStamp) && ($recurringStartDateStamp <= $intervalEndDateStamp))
 				|| (($intervalStartDateStamp <= $recurringEndDateStamp) && ($recurringEndDateStamp <= $intervalEndDateStamp))
 			) {
-				array_push($resultData, $eventData);
+				array_push($resultData, $eventData["filtered_event_data"]);
 			}
 
 		}
