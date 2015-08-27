@@ -34,9 +34,9 @@ abstract class DHelper extends SchedulerHelperConnector
 		"debug" => true
 	);
 
-    protected $_mapped_fields = array();
+	protected $_mapped_fields = array();
 
-    protected $_use_only_mapped_fields = false;
+	protected $_use_only_mapped_fields = false;
 
 	protected function getIdFieldName()
 	{
@@ -100,8 +100,8 @@ abstract class DHelper extends SchedulerHelperConnector
 		if(!is_array($fieldsDataArray))
 			throw new Exception("Fields data must be array.");
 
-        $this->_mapped_fields = $fieldsDataArray;
-        $this->_use_only_mapped_fields = $useOnlySetFields;
+		$this->_mapped_fields = $fieldsDataArray;
+		$this->_use_only_mapped_fields = $useOnlySetFields;
 
 		foreach($fieldsDataArray as $fieldKey => $fieldValue) {
 			//If field name is numeric, then made same field key and field value.
@@ -154,10 +154,10 @@ class Helper extends DHelper implements IHelper
 		return new self($connectConfigs);
 	}
 
-    /**
-     * Get recurring events data exceptions. And prepare data to format: []
-     * @return array
-     */
+	/**
+	 * Get recurring events data exceptions. And prepare data to format: []
+	 * @return array
+	 */
 	private function _getRecurringEventsExceptionsByInterval()
 	{
 		$getEventsSql = "
@@ -191,14 +191,14 @@ class Helper extends DHelper implements IHelper
 		return $events;
 	}
 
-    /**
-     * Get simple events by interval.
-     * @param $startDate
-     * @param $endDate
-     * @return array
-     */
-    private function _getSimpleEventsByInterval($startDate, $endDate) {
-        $getEventsSql = "
+	/**
+	 * Get simple events by interval.
+	 * @param $startDate
+	 * @param $endDate
+	 * @return array
+	 */
+	private function _getSimpleEventsByInterval($startDate, $endDate) {
+		$getEventsSql = "
 			SELECT
 				*
 			FROM
@@ -222,10 +222,10 @@ class Helper extends DHelper implements IHelper
 				AND ".$this->getLengthFieldName()." = '0'
         ";
 
-        $query = $this->getPDO()->prepare($getEventsSql);
-        $query->execute();
-        return $query->fetchAll();
-    }
+		$query = $this->getPDO()->prepare($getEventsSql);
+		$query->execute();
+		return $query->fetchAll();
+	}
 
 	/**
 	 * Get recurring events data by interval.
@@ -234,8 +234,8 @@ class Helper extends DHelper implements IHelper
 	 * @return array
 	 */
 	private function _getRecurringEventsByInterval($startDate, $endDate)
-    {
-        $getEventsSql = "
+	{
+		$getEventsSql = "
 			SELECT
 				*
 			FROM
@@ -243,12 +243,8 @@ class Helper extends DHelper implements IHelper
 			WHERE
 			    (
                     (
-                        ".$this->getStartDateFieldName()." >= '{$startDate}'
-                        AND ".$this->getStartDateFieldName()." <= '{$endDate}'
-                    )
-                    OR (
                         ".$this->getEndDateFieldName()." >= '{$startDate}'
-                        AND ".$this->getEndDateFieldName()." <= '{$endDate}'
+                        AND ".$this->getStartDateFieldName()." <= '{$endDate}'
                     )
                 )
                 AND (
@@ -272,18 +268,18 @@ class Helper extends DHelper implements IHelper
 	private function _filterEventDataToResponse($eventDataArray)
 	{
 		$filteredEventData = array();
-        $fullEventData = array();
+		$fullEventData = array();
 
 		foreach($eventDataArray as $dataKey => $dataValue) {
-            $mappedFieldsValues = array_flip($this->_mapped_fields);
-            $fullEventData[$dataKey] = $dataValue;
+			$mappedFieldsValues = array_flip($this->_mapped_fields);
+			$fullEventData[$dataKey] = $dataValue;
 
-            if(
-                ($this->_use_only_mapped_fields && array_key_exists($dataKey, $mappedFieldsValues))
-                || !$this->_use_only_mapped_fields
-            ) {
-                $filteredEventData[$dataKey] = $dataValue;
-            }
+			if(
+				($this->_use_only_mapped_fields && array_key_exists($dataKey, $mappedFieldsValues))
+				|| !$this->_use_only_mapped_fields
+			) {
+				$filteredEventData[$dataKey] = $dataValue;
+			}
 		}
 
 //        $this->_use_only_mapped_fields
@@ -359,22 +355,22 @@ class Helper extends DHelper implements IHelper
 
 			//Exclude recurring exceptions by dates and prepare events data.
 			$recurringEventData = $this->_prepareRecurringDataWithoutExceptions($recurringDatesStamps, $eventData, $recurringEventsExceptions);
-            $eventsData = array_merge($eventsData, $recurringEventData);
+			$eventsData = array_merge($eventsData, $recurringEventData);
 		}
 
-        //Add simple events.
-        $simpleEvents = $this->_getSimpleEventsByInterval($startDate, $endDate);
-        $eventsData = array_merge($eventsData, $simpleEvents);
+		//Add simple events.
+		$simpleEvents = $this->_getSimpleEventsByInterval($startDate, $endDate);
+		$eventsData = array_merge($eventsData, $simpleEvents);
 
 		//Leave events that belongs to interval.
 		$resultData = array();
 		for($i = 0; $i < count($eventsData); $i++) {
 			$eventData = $eventsData[$i];
-            $fullEventData = $eventData["full_event_data"];
-            $recurringStartDateStamp = SchedulerHelperDate::getDateTimestamp($fullEventData[$this->getStartDateFieldName()]);
-            $recurringEndDateStamp = SchedulerHelperDate::getDateTimestamp($fullEventData[$this->getEndDateFieldName()]);
+			$fullEventData = $eventData["full_event_data"];
+			$recurringStartDateStamp = SchedulerHelperDate::getDateTimestamp($fullEventData[$this->getStartDateFieldName()]);
+			$recurringEndDateStamp = SchedulerHelperDate::getDateTimestamp($fullEventData[$this->getEndDateFieldName()]);
 
-            if(
+			if(
 				(($intervalStartDateStamp <= $recurringStartDateStamp) && ($recurringStartDateStamp <= $intervalEndDateStamp))
 				|| (($intervalStartDateStamp <= $recurringEndDateStamp) && ($recurringEndDateStamp <= $intervalEndDateStamp))
 			) {
