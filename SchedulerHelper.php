@@ -18,7 +18,7 @@ abstract class DHelper extends SchedulerHelperConnector
 	const FLD_LENGTH = "length";
 
 	private $_fields_names = array(
-		self::FLD_ID => "id",
+		self::FLD_ID => "event_id",
 		self::FLD_START_DATE => "start_date",
 		self::FLD_END_DATE => "end_date",
 		self::FLD_TEXT => "text",
