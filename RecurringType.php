@@ -161,14 +161,19 @@ class RecurringType {
         $formatDaysListPartReg = "/,/";
         $parsedData = array();
 
+        $parts = preg_split($formatPartsReg, $dataStr);
         list(
             $parsedData[self::FLD_REC_TYPE],
             $parsedData[self::FLD_REC_TYPE_STEP],
             $parsedData[self::FLD_WEEK_DAY],
             $parsedData[self::FLD_WEEK_NUMBER],
-            $parsedData[self::FLD_WEEK_DAYS_LIST],
-            $parsedData[self::FLD_REPEAT]
-            ) = preg_split($formatPartsReg, $dataStr);
+            $parsedData[self::FLD_WEEK_DAYS_LIST]
+            ) = $parts;
+
+        if(isset($parts[5]))
+        {
+            $parsedData[self::FLD_REPEAT] = $parts[5];
+        }
 
         $parsedData[self::FLD_WEEK_DAYS_LIST] = ($parsedData[self::FLD_WEEK_DAYS_LIST]) ?
             preg_split($formatDaysListPartReg, $parsedData[self::FLD_WEEK_DAYS_LIST]) : array();
