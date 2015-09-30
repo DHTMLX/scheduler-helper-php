@@ -18,7 +18,7 @@ abstract class DHelper extends SchedulerHelperConnector
 	const FLD_LENGTH = "length";
 
 	private $_fields_names = array(
-		self::FLD_ID => "event_id",
+		self::FLD_ID => "id",
 		self::FLD_START_DATE => "start_date",
 		self::FLD_END_DATE => "end_date",
 		self::FLD_TEXT => "text",
@@ -228,6 +228,22 @@ class Helper extends DHelper implements IHelper
 	}
 
 	/**
+	 * Prepare events data.
+	 * @param $events
+	 * @return array
+	 */
+	private function _prepareSimpleEvents($events)
+	{
+		$resultData = array();
+		for($i = 0; $i < count($events); $i++)
+		{
+			array_push($resultData, $this->_filterEventDataToResponse($events[$i]));
+		}
+
+		return $resultData;
+	}
+
+	/**
 	 * Get recurring events data by interval.
 	 * @param $startDate
 	 * @param $endDate
@@ -360,6 +376,7 @@ class Helper extends DHelper implements IHelper
 
 		//Add simple events.
 		$simpleEvents = $this->_getSimpleEventsByInterval($startDate, $endDate);
+		$simpleEvents = $this->_prepareSimpleEvents($simpleEvents);
 		$eventsData = array_merge($eventsData, $simpleEvents);
 
 		//Leave events that belongs to interval.
