@@ -174,7 +174,7 @@ class Helper extends DHelper implements IHelper
 				AND ".$this->getLengthFieldName()." > '0'
 		";
 
-		$query = $this->getPDO()->prepare($getEventsSql);
+		$query = $this->getConnection()->prepare($getEventsSql);
 		$query->execute();
 		$events = array();
 
@@ -188,6 +188,7 @@ class Helper extends DHelper implements IHelper
 			$events[$eventParentId][$eventLength] = $eventData;
 		}
 
+        $this->closeConnection();
 		return $events;
 	}
 
@@ -222,9 +223,11 @@ class Helper extends DHelper implements IHelper
 				AND ".$this->getLengthFieldName()." = '0'
         ";
 
-		$query = $this->getPDO()->prepare($getEventsSql);
+		$query = $this->getConnection()->prepare($getEventsSql);
 		$query->execute();
-		return $query->fetchAll();
+        $data = $query->fetchAll();
+        $this->closeConnection();
+		return $data;
 	}
 
 	/**
@@ -271,9 +274,11 @@ class Helper extends DHelper implements IHelper
 				AND ".$this->getLengthFieldName()." != '0'
         ";
 
-		$query = $this->getPDO()->prepare($getEventsSql);
+		$query = $this->getConnection()->prepare($getEventsSql);
 		$query->execute();
-		return $query->fetchAll();
+        $data = $query->fetchAll();
+        $this->closeConnection();
+		return $data;
 	}
 
 	/**
@@ -410,20 +415,22 @@ class Helper extends DHelper implements IHelper
 		if((isset($dataArray[self::FLD_RECURRING_TYPE])) && is_array($dataArray[self::FLD_RECURRING_TYPE]))
 			$dataArray[self::FLD_RECURRING_TYPE] = RecurringType::parseRecurringDataArrayToString($dataArray[self::FLD_RECURRING_TYPE]);
 
-		$PDO = $this->getPDO();
-		$PDO->beginTransaction();
+		$connection = $this->getConnection();
+        $connection->beginTransaction();
 		try {
 			self::getInstance($this->getConnectConfigs())
 				->setFieldsNames($this->getFieldsNames())
 				->setFieldsValues($dataArray)
 				->save();
 
-			$PDO->commit();
+            $connection->commit();
 		}
 		catch(Exception $error) {
-			$PDO->rollBack();
+            $connection->rollBack();
 			throw new Exception("Data not saved.");
 		}
+
+        $this->closeConnection();
 	}
 
 	/**
@@ -433,20 +440,22 @@ class Helper extends DHelper implements IHelper
 	 */
 	public function deleteById($id)
 	{
-		$PDO = $this->getPDO();
-		$PDO->beginTransaction();
+        $connection = $this->getConnection();
+        $connection->beginTransaction();
 		try {
 			self::getInstance($this->getConnectConfigs())
 				->setFieldsNames($this->getFieldsNames())
 				->setFieldsValues(array(self::FLD_ID => $id))
 				->delete();
 
-			$PDO->commit();
+            $connection->commit();
 		}
 		catch(Exception $error) {
-			$PDO->rollBack();
+            $connection->rollBack();
 			throw new Exception("Data not deleted.");
 		}
+
+        $this->closeConnection();
 	}
 
 	/**

@@ -28,7 +28,7 @@ class SchedulerHelperConnector
         return "{$this->_dbsm}:host={$this->_host};dbname={$this->_db_name}";
     }
 
-    public function getPDO()
+    public function getConnection()
     {
         $PDO_options = array(
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
@@ -37,6 +37,12 @@ class SchedulerHelperConnector
 
         $this->_PDO = ($this->_PDO) ? $this->_PDO : new PDO($this->getConfigStringPDO(), $this->_user, $this->_password, $PDO_options);
         return $this->_PDO;
+    }
+
+    public function closeConnection()
+    {
+        unset($this->_PDO);
+        $this->_PDO = null;
     }
 
     protected function save()
@@ -69,7 +75,8 @@ class SchedulerHelperConnector
         if($this->config["debug"])
             echo("Update operation sql: ".$sql."<BR>");
 
-        $this->getPDO()->prepare($sql)->execute();
+        $this->getConnection()->prepare($sql)->execute();
+        $this->closeConnection();
     }
 
     protected function insert()
@@ -82,7 +89,8 @@ class SchedulerHelperConnector
         if($this->config["debug"])
             echo("Insert operation sql: ".$sql."<BR>");
 
-        $this->getPDO()->prepare($sql)->execute();
+        $this->getConnection()->prepare($sql)->execute();
+        $this->closeConnection();
     }
 
     protected function delete()
@@ -100,6 +108,7 @@ class SchedulerHelperConnector
         if($this->config["debug"])
             echo("Delete operation sql: ".$sql."<BR>");
 
-        $this->getPDO()->prepare($sql)->execute();
+        $this->getConnection()->prepare($sql)->execute();
+        $this->closeConnection();
     }
 }
