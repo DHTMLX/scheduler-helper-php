@@ -155,6 +155,11 @@ class Helper extends DHelper implements IHelper
 		return new self($connectConfigs);
 	}
 
+	/**
+	 * Gets timestamp from date
+	 * @param $date
+	 * @return int
+	 */
 	private function getDateTimestamp($date)
 	{
 		return SchedulerHelperDate::getDateTimestamp($date, $this->config["server_date"]);
