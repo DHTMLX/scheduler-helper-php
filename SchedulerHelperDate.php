@@ -32,17 +32,28 @@ class SchedulerHelperDate
         return $differenceArray;
     }
 
-    static public function getDateTimestamp($date)
+    static public function getDateTimestamp($date, $serverDate)
     {
         $parsedDate = date_parse($date);
-        return gmmktime(
-            $parsedDate["hour"],
-            $parsedDate["minute"],
-            $parsedDate["second"],
-            $parsedDate["month"],
-            $parsedDate["day"],
-            $parsedDate["year"]
-        );
+        if ($serverDate) {
+            return gmmktime(
+                $parsedDate["hour"],
+                $parsedDate["minute"],
+                $parsedDate["second"],
+                $parsedDate["month"],
+                $parsedDate["day"],
+                $parsedDate["year"]
+            );
+        } else {
+            return mktime(
+                $parsedDate["hour"],
+                $parsedDate["minute"],
+                $parsedDate["second"],
+                $parsedDate["month"],
+                $parsedDate["day"],
+                $parsedDate["year"]
+            );
+        }
     }
 
     static public function getDayOfWeek($timestamp) {
