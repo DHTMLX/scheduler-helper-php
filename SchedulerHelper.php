@@ -32,7 +32,7 @@ abstract class DHelper extends SchedulerHelperConnector
 
 	public $config = array(
 		"debug" => true,
-		"server_date" => true
+		"server_date" => false
 	);
 
 	protected $_mapped_fields = array();
