@@ -69,7 +69,7 @@ For getting only fields that have set, you need just to set 'true' like second p
 For setting weather server time zone will be considered you should use server_date config(true by default). If true helper will use server time, else will use dates as it goes from database.
 
 ```php
-  $helper->config["server_date"] = false;
+  $helper->config["server_date"] = true;
 ```
 
 To save data to the database, use the method 'saveData([dataArray])':
@@ -135,4 +135,4 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 IN THE SOFTWARE.
-
+===============
