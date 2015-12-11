@@ -327,7 +327,7 @@ class RecurringType {
             (!is_null($countDates) && ($countRecurringCycles <= $countDates))
             || (
                 ($intervalStartDateStamp <= $currentRecurringStartDateStamp)
-                && ($currentRecurringStartDateStamp <= $intervalEndDateStamp)
+                && ($currentRecurringStartDateStamp < $intervalEndDateStamp)
             )
         ) {
             $countRecurringCycles++;
