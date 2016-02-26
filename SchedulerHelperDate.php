@@ -35,8 +35,10 @@ class SchedulerHelperDate
     static public function getDateTimestamp($date, $serverDate)
     {
         $parsedDate = date_parse($date);
+
+        $timestamp = false;
         if ($serverDate) {
-            return gmmktime(
+            $timestamp = gmmktime(
                 $parsedDate["hour"],
                 $parsedDate["minute"],
                 $parsedDate["second"],
@@ -45,7 +47,7 @@ class SchedulerHelperDate
                 $parsedDate["year"]
             );
         } else {
-            return mktime(
+            $timestamp = mktime(
                 $parsedDate["hour"],
                 $parsedDate["minute"],
                 $parsedDate["second"],
@@ -54,6 +56,14 @@ class SchedulerHelperDate
                 $parsedDate["year"]
             );
         }
+
+        // mktime/gmmktime returns FALSE for years after 2038 in 32bit PHP, so timestamps for end_dates of endless series will be false as well (usually defined as 9999/1/1).
+        // If $date is a valid date string and timestamp equals FALSE - assume that's it and give timestamp maximum possible value, so dates could be compared correctly later in code
+        if($timestamp === false && $parsedDate && !($parsedDate["error_count"])){
+            $timestamp = PHP_INT_MAX;
+        }
+
+        return $timestamp;
     }
 
     static public function getDayOfWeek($timestamp) {
