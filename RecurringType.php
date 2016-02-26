@@ -158,7 +158,7 @@ class RecurringType {
     static private function _parseRecurringDataString($dataStr)
     {
         $formatPartsReg = "/(_|#)/";
-        $formatDaysListPartReg = "/,/";
+        $formatDaysListDelimiter = ",";
         $parsedData = array();
 
         $parts = preg_split($formatPartsReg, $dataStr);
@@ -175,8 +175,14 @@ class RecurringType {
             $parsedData[self::FLD_REPEAT] = $parts[5];
         }
 
-        $parsedData[self::FLD_WEEK_DAYS_LIST] = ($parsedData[self::FLD_WEEK_DAYS_LIST]) ?
-            preg_split($formatDaysListPartReg, $parsedData[self::FLD_WEEK_DAYS_LIST]) : array();
+        $days = $parsedData[self::FLD_WEEK_DAYS_LIST];
+
+        // $days is a comma separated week days string ("0,1,2"). Need an extra check for `every Sunday` series - "0" - which string is considered as falsy/empty in php
+        if(!empty($days) || $days === "0"){
+            $parsedData[self::FLD_WEEK_DAYS_LIST] = explode($formatDaysListDelimiter, $days);
+        }else{
+            $parsedData[self::FLD_WEEK_DAYS_LIST] = array();
+        }
 
         return $parsedData;
     }
