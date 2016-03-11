@@ -22,6 +22,13 @@ class RecurringType {
     const IS_RECURRING_EXCEPTION = "";
     const IS_RECURRING_BREAK = "none";
 
+    const TRANSPOSE_SIZE = array(
+        self::REC_TYPE_DAY => 1,
+        self::REC_TYPE_WEEK => 7,
+        self::REC_TYPE_MONTH => 1,
+        self::REC_TYPE_YEAR => 12
+    );
+
     private $_fields_values = array();
     private $_recurring_start_date_stamp;
     private $_recurring_end_date_stamp;
@@ -158,7 +165,7 @@ class RecurringType {
     static private function _parseRecurringDataString($dataStr)
     {
         $formatPartsReg = "/(_|#)/";
-        $formatDaysListPartReg = "/,/";
+        $formatDaysListDelimiter = ",";
         $parsedData = array();
 
         $parts = preg_split($formatPartsReg, $dataStr);
@@ -175,8 +182,14 @@ class RecurringType {
             $parsedData[self::FLD_REPEAT] = $parts[5];
         }
 
-        $parsedData[self::FLD_WEEK_DAYS_LIST] = ($parsedData[self::FLD_WEEK_DAYS_LIST]) ?
-            preg_split($formatDaysListPartReg, $parsedData[self::FLD_WEEK_DAYS_LIST]) : array();
+        $days = $parsedData[self::FLD_WEEK_DAYS_LIST];
+
+        // $days is a comma separated week days string ("0,1,2"). Need an extra check for `every Sunday` series - "0" - which string is considered as falsy/empty in php
+        if(!empty($days) || $days === "0"){
+            $parsedData[self::FLD_WEEK_DAYS_LIST] = explode($formatDaysListDelimiter, $days);
+        }else{
+            $parsedData[self::FLD_WEEK_DAYS_LIST] = array();
+        }
 
         return $parsedData;
     }
@@ -229,32 +242,46 @@ class RecurringType {
         );
 
         //Return recurring interval without correcting if it not belongs to assigned interval.
-        if(($intervalStartDateStamp >= $recurringEndDateStamp) || ($intervalEndDateStamp <= $recurringStartDateStamp))
+        if (($intervalStartDateStamp >= $recurringEndDateStamp) || ($intervalEndDateStamp <= $recurringStartDateStamp))
             return $recurringInterval;
 
         //Correct start date interval if it smaller then recurring start date.
-        if($intervalStartDateStamp < $recurringStartDateStamp)
+        if ($intervalStartDateStamp < $recurringStartDateStamp)
             $intervalStartDateStamp = $recurringStartDateStamp;
 
         //Correct end date interval if it smaller then recurring end date.
-        if($intervalEndDateStamp > $recurringEndDateStamp)
+        if ($intervalEndDateStamp > $recurringEndDateStamp)
             $intervalEndDateStamp = $recurringEndDateStamp;
 
-        $differenceStartDates = SchedulerHelperDate::differenceBetweenDates($intervalStartDateStamp, $recurringStartDateStamp);
-        $differenceEndDates = SchedulerHelperDate::differenceBetweenDates($intervalEndDateStamp, $recurringEndDateStamp);
-        $dateUnits = SchedulerHelperDate::$DATE_UNITS;
-
-        //Add years.
-        $recurringInterval["start_date_stamp"] = SchedulerHelperDate::addYears($recurringStartDateStamp, $differenceStartDates[$dateUnits["year"]]);
-        $recurringInterval["end_date_stamp"] = SchedulerHelperDate::addYears($recurringEndDateStamp, -$differenceEndDates[$dateUnits["year"]]);
-
+        $type = $this->getRecurringTypeValue();
         //If recurring type is "year" then exit, else add months.
-        if($this->getRecurringTypeValue() == self::REC_TYPE_YEAR)
-            return $recurringInterval;
+        if ($type == self::REC_TYPE_DAY || $type == self::REC_TYPE_WEEK) {
+            $step = self::TRANSPOSE_SIZE[$type] * $this->getRecurringTypeStepValue();
+            $day = 24 * 60 * 60;
+            $delta = floor(($intervalStartDateStamp - $recurringStartDateStamp) / ($day * $step));
+            if ($delta > 0)
+                $recurringInterval["start_date_stamp"] = $recurringStartDateStamp + $delta * $step * $day;
+        }
+        else {
+            $differenceStartDates = SchedulerHelperDate::differenceBetweenDates($intervalStartDateStamp, $recurringStartDateStamp);
+            $differenceEndDates = SchedulerHelperDate::differenceBetweenDates($intervalEndDateStamp, $recurringEndDateStamp);
+            $dateUnits = SchedulerHelperDate::$DATE_UNITS;
 
-        //Add months.
-        $recurringInterval["start_date_stamp"] = SchedulerHelperDate::addMonths($recurringInterval["start_date_stamp"], $differenceStartDates[$dateUnits["month"]]);
-        $recurringInterval["end_date_stamp"] = SchedulerHelperDate::addMonths($recurringInterval["end_date_stamp"], -$differenceEndDates[$dateUnits["month"]]);
+            //Add years.
+            $recurringInterval["start_date_stamp"] = SchedulerHelperDate::addYears($recurringStartDateStamp, $differenceStartDates[$dateUnits["year"]]);
+            $recurringInterval["end_date_stamp"] = SchedulerHelperDate::addYears($recurringEndDateStamp, -$differenceEndDates[$dateUnits["year"]]);
+
+
+            if ($type == self::REC_TYPE_YEAR)
+                return $recurringInterval;
+
+            //Add months.
+            $recurringInterval["start_date_stamp"] = SchedulerHelperDate::addMonths($recurringInterval["start_date_stamp"], $differenceStartDates[$dateUnits["month"]]);
+            $recurringInterval["end_date_stamp"] = SchedulerHelperDate::addMonths($recurringInterval["end_date_stamp"], -$differenceEndDates[$dateUnits["month"]]);
+            if ($type == self::REC_TYPE_MONTH)
+                return $recurringInterval;
+        }
+
         return $recurringInterval;
     }
 
