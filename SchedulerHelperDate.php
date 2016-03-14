@@ -20,6 +20,15 @@ class SchedulerHelperDate
         "year" => "Y"
     );
 
+    static $INTERVAL_UNITS = array(
+        "hour" => array("type" => "T", "val" => "H"),
+        "minute" => array("type" => "T", "val" => "M"),
+        "second" => array("type" => "T", "val" => "S"),
+        "month" => array("type" => "", "val" => "M"),
+        "day" => array("type" => "", "val" => "D"),
+        "year" => array("type" => "", "val" => "Y")
+    );
+
     static public function differenceBetweenDates($firstDateStamp, $secondDateStamp) {
         $firstDate = new DateTime(date(self::FORMAT_DEFAULT, $firstDateStamp));
         $secondDate = new DateTime(date(self::FORMAT_DEFAULT, $secondDateStamp));
@@ -72,44 +81,31 @@ class SchedulerHelperDate
     }
 
     static public function addDate($timestamp, $unit, $count) {
-        $dateUnits = self::$DATE_UNITS;
-        $units = array(
-            $dateUnits["hour"],
-            $dateUnits["minute"],
-            $dateUnits["second"],
-            $dateUnits["month"],
-            $dateUnits["day"],
-            $dateUnits["year"]
-        );
-        $args = array();
-
-        for($i = 0; $i < count($units); $i++){
-            $time_part = $units[$i];
-            $param = date($time_part, $timestamp);
-            if($unit == $time_part)
-                $param += $count;
-
-            array_push($args, $param);
-
-        }
-
-        return call_user_func_array("mktime", $args);
+        $date = new DateTime();
+        $date->setTimestamp($timestamp);
+        $absCount = $count >= 0 ? $count : abs($count);
+        $interval = new \DateInterval("P" . $unit["type"] . $absCount . $unit["val"]);
+        if ($count >= 0)
+            $date->add($interval);
+        else
+            $date->sub($interval);
+        return $date->getTimestamp();
     }
 
     static public function addDays($timestamp, $count) {
-        return self::addDate($timestamp, self::$DATE_UNITS["day"], $count);
+        return self::addDate($timestamp, self::$INTERVAL_UNITS["day"], $count);
     }
 
     static public function addWeeks($timestamp, $count) {
-        return self::addDate($timestamp, self::$DATE_UNITS["day"], ($count * self::DAYS_IN_WEEK));
+        return self::addDate($timestamp, self::$INTERVAL_UNITS["day"], ($count * self::DAYS_IN_WEEK));
     }
 
     static public function addMonths($timestamp, $count) {
-        return self::addDate($timestamp, self::$DATE_UNITS["month"], $count);
+        return self::addDate($timestamp, self::$INTERVAL_UNITS["month"], $count);
     }
 
     static public function addYears($timestamp, $count) {
-        return self::addDate($timestamp, self::$DATE_UNITS["year"], $count);
+        return self::addDate($timestamp, self::$INTERVAL_UNITS["year"], $count);
     }
 
 }
