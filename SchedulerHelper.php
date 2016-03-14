@@ -243,7 +243,8 @@ class Helper extends DHelper implements IHelper
 	private function _prepareSimpleEvents($events)
 	{
 		$resultData = array();
-		for($i = 0; $i < count($events); $i++)
+		$evCount = count($events);
+		for($i = 0; $i < $evCount; $i++)
 		{
 			array_push($resultData, $this->_filterEventDataToResponse($events[$i]));
 		}
@@ -295,22 +296,11 @@ class Helper extends DHelper implements IHelper
 	{
 		$filteredEventData = array();
 		$fullEventData = array();
-
 		foreach($eventDataArray as $dataKey => $dataValue) {
-			$mappedFieldsValues = array_flip($this->_mapped_fields);
 			$fullEventData[$dataKey] = $dataValue;
-
-			if(
-				($this->_use_only_mapped_fields && array_key_exists($dataKey, $mappedFieldsValues))
-				|| !$this->_use_only_mapped_fields
-			) {
+			if (!$this->_use_only_mapped_fields || array_key_exists($dataKey, array_flip($this->_mapped_fields)))
 				$filteredEventData[$dataKey] = $dataValue;
-			}
 		}
-
-//        $this->_use_only_mapped_fields
-
-//        var_dump($filteredEventData);exit;
 		return array("filtered_event_data" => $filteredEventData, "full_event_data" => $fullEventData);
 	}
 
@@ -329,13 +319,17 @@ class Helper extends DHelper implements IHelper
 		if(isset($recurringEventExceptionsData[$recurringEventData[$this->getIdFieldName()]]))
 			$parentRecurringExceptions = $recurringEventExceptionsData[$recurringEventData[$this->getIdFieldName()]];
 
-		for($i = 0; $i < count($recurringDatesStamps); $i++) {
+		$startField = $this->getStartDateFieldName();
+		$lengthField = $this->getLengthFieldName();
+		$endField = $this->getEndDateFieldName();
+		$stampsCount = count($recurringDatesStamps);
+		for($i = 0; $i < $stampsCount; $i++) {
 			$preparedEventData = $recurringEventData;
 			$eventStartDateStamp = $recurringDatesStamps[$i];
-			$preparedEventData[$this->getStartDateFieldName()] = date(SchedulerHelperDate::FORMAT_DEFAULT, $eventStartDateStamp);
+			$preparedEventData[$startField] = date(SchedulerHelperDate::FORMAT_DEFAULT, $eventStartDateStamp);
 
-			$eventEndDateStamp = $eventStartDateStamp + $recurringEventData[$this->getLengthFieldName()];
-			$preparedEventData[$this->getEndDateFieldName()] = date(SchedulerHelperDate::FORMAT_DEFAULT, $eventEndDateStamp);
+			$eventEndDateStamp = $eventStartDateStamp + $recurringEventData[$lengthField];
+			$preparedEventData[$endField] = date(SchedulerHelperDate::FORMAT_DEFAULT, $eventEndDateStamp);
 
 			if(isset($parentRecurringExceptions[$eventStartDateStamp])) {
 				$eventExceptionData = $parentRecurringExceptions[$eventStartDateStamp];
@@ -367,13 +361,18 @@ class Helper extends DHelper implements IHelper
 		$intervalStartDateStamp = $this->getDateTimestamp($startDate);
 		$intervalEndDateStamp = $this->getDateTimestamp($endDate);
 
-		for($i = 0; $i < count($recurringEvents); $i++) {
+		$recField = $this->getRecurringTypeFieldName();
+		$startField = $this->getStartDateFieldName();
+		$endField = $this->getEndDateFieldName();
+
+		$recCount = count($recurringEvents);
+		for($i = 0; $i < $recCount; $i++) {
 			$eventData = $recurringEvents[$i];
 
 			//Parse recurring data format.
-			$recurringTypeData = $eventData[$this->getRecurringTypeFieldName()];
-			$recurringStartDateStamp = $this->getDateTimestamp($eventData[$this->getStartDateFieldName()]);
-			$recurringEndDateStamp = $this->getDateTimestamp($eventData[$this->getEndDateFieldName()]);
+			$recurringTypeData = $eventData[$recField];
+			$recurringStartDateStamp = $this->getDateTimestamp($eventData[$startField]);
+			$recurringEndDateStamp = $this->getDateTimestamp($eventData[$endField]);
 			$recurringTypeObj = new RecurringType($recurringTypeData, $recurringStartDateStamp, $recurringEndDateStamp);
 
 			//Get recurring dates by parsed format.
@@ -391,18 +390,15 @@ class Helper extends DHelper implements IHelper
 
 		//Leave events that belongs to interval.
 		$resultData = array();
-		for($i = 0; $i < count($eventsData); $i++) {
+		$evCount = count($eventsData);
+		for($i = 0; $i < $evCount; $i++) {
 			$eventData = $eventsData[$i];
 			$fullEventData = $eventData["full_event_data"];
-			$recurringStartDateStamp = $this->getDateTimestamp($fullEventData[$this->getStartDateFieldName()]);
-			$recurringEndDateStamp = $this->getDateTimestamp($fullEventData[$this->getEndDateFieldName()]);
-
-			if(
-				($recurringStartDateStamp <= $intervalEndDateStamp) && ($recurringEndDateStamp >= $intervalStartDateStamp)
-			) {
+			$recurringStartDateStamp = $this->getDateTimestamp($fullEventData[$startField]);
+			$recurringEndDateStamp = $this->getDateTimestamp($fullEventData[$endField]);
+			if($recurringStartDateStamp <= $intervalEndDateStamp && $recurringEndDateStamp >= $intervalStartDateStamp) {
 				array_push($resultData, $eventData["filtered_event_data"]);
 			}
-
 		}
 
 		return $resultData;

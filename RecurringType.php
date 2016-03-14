@@ -311,7 +311,8 @@ class RecurringType {
         //If recurring type has list of days, then get those days.
         $recurringWeekDays = $this->getWeekDaysListValue();
         if($recurringWeekDays) {
-            for($i = 0; $i < count($recurringWeekDays); $i++) {
+            $daysCount = count($recurringWeekDays);
+            for($i = 0; $i < $daysCount; $i++) {
                 $dayStep = $this->_getRecurringDayStep($dateStamp, $recurringWeekDays[$i]);
                 array_push($recurringDays, SchedulerHelperDate::addDays($dateStamp, $dayStep));
             }
@@ -338,7 +339,10 @@ class RecurringType {
      */
     public function getRecurringDates($intervalStartDateStamp, $intervalEndDateStamp, $countDates = NULL)
     {
-        if(!($this->getRecurringTypeStepValue() && $this->getRecurringTypeValue()))
+        $recurringTypeStep = $this->getRecurringTypeStepValue();
+        $recType = $this->getRecurringTypeValue();
+
+        if(!($recType && $recType))
             return false;
 
         //Correct interval by recurring interval.
@@ -361,8 +365,7 @@ class RecurringType {
             $recurringDays = $this->_getRecurringDays($currentRecurringStartDateStamp);
             $recurringDates = array_merge($recurringDates, $recurringDays);
 
-            $recurringTypeStep = $this->getRecurringTypeStepValue();
-            switch($this->getRecurringTypeValue()) {
+            switch($recType) {
                 case self::REC_TYPE_DAY:
                     $currentRecurringStartDateStamp = SchedulerHelperDate::addDays($currentRecurringStartDateStamp, $recurringTypeStep);
                     break;
