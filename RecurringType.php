@@ -22,7 +22,7 @@ class RecurringType {
     const IS_RECURRING_EXCEPTION = "";
     const IS_RECURRING_BREAK = "none";
 
-    const TRANSPOSE_SIZE = array(
+    private $_transpose_size = array(
         self::REC_TYPE_DAY => 1,
         self::REC_TYPE_WEEK => 7,
         self::REC_TYPE_MONTH => 1,
@@ -256,7 +256,7 @@ class RecurringType {
         $type = $this->getRecurringTypeValue();
         //If recurring type is "year" then exit, else add months.
         if ($type == self::REC_TYPE_DAY || $type == self::REC_TYPE_WEEK) {
-            $step = self::TRANSPOSE_SIZE[$type] * $this->getRecurringTypeStepValue();
+            $step = $this->_transpose_size[$type] * $this->getRecurringTypeStepValue();
             $day = 24 * 60 * 60;
             $delta = floor(($intervalStartDateStamp - $recurringStartDateStamp) / ($day * $step));
             if ($delta > 0)
