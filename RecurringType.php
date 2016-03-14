@@ -311,7 +311,8 @@ class RecurringType {
         //If recurring type has list of days, then get those days.
         $recurringWeekDays = $this->getWeekDaysListValue();
         if($recurringWeekDays) {
-            for($i = 0; $i < count($recurringWeekDays); $i++) {
+            $daysCount = count($recurringWeekDays);
+            for($i = 0; $i < $daysCount; $i++) {
                 $dayStep = $this->_getRecurringDayStep($dateStamp, $recurringWeekDays[$i]);
                 array_push($recurringDays, SchedulerHelperDate::addDays($dateStamp, $dayStep));
             }
