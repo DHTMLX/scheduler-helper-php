@@ -396,13 +396,9 @@ class Helper extends DHelper implements IHelper
 			$fullEventData = $eventData["full_event_data"];
 			$recurringStartDateStamp = $this->getDateTimestamp($fullEventData[$startField]);
 			$recurringEndDateStamp = $this->getDateTimestamp($fullEventData[$endField]);
-
-			if(
-				($recurringStartDateStamp <= $intervalEndDateStamp) && ($recurringEndDateStamp >= $intervalStartDateStamp)
-			) {
+			if($recurringStartDateStamp <= $intervalEndDateStamp && $recurringEndDateStamp >= $intervalStartDateStamp) {
 				array_push($resultData, $eventData["filtered_event_data"]);
 			}
-
 		}
 
 		return $resultData;
