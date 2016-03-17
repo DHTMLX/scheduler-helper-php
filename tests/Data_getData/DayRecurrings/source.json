@@ -5,15 +5,14 @@
   },
   "data": [
     {
+      "id": "497",
       "start_date": "2016-03-09 00:00:00",
       "end_date": "2016-03-15 00:00:00",
       "text": "Rec Ev",
-      "id": "497",
-      "event_pid": "",
-      "event_length": "300",
-      "rec_pattern": "day_2___",
       "rec_type": "day_2___#3",
-      "!nativeeditor_status": ""
+      "event_pid": "0",
+      "event_length": "300",
+      "rec_pattern": "day_2___"
     }
   ]
 }

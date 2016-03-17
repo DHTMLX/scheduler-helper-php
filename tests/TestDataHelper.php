@@ -49,9 +49,9 @@ class TestDataHelper
     public function compareDataObjects($helperObj, $schedObj, $fields)
     {
         foreach($fields as $key=>$value){
-            print($helperObj[$key]." _ ".$schedObj -> {$key}."\n");
-            if($helperObj[$key] !== $schedObj -> {$key})
+            if($helperObj[$key] !== $schedObj -> {$key}) {
                 return false;
+            }
         }
         return true;
     }
