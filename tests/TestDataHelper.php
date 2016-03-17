@@ -14,7 +14,7 @@ class TestDataHelper
         $file = dirname(__FILE__) . "/" . $this->_dataFolder . "/" . $name . "/" . $type;
         if (!file_exists($file)) return null;
 
-        return json_decode(file_get_contents($file));
+        return json_decode(file_get_contents($file),true);
     }
 
     public function __construct($testName)
@@ -49,7 +49,7 @@ class TestDataHelper
     public function compareDataObjects($helperObj, $schedObj, $fields)
     {
         foreach($fields as $key=>$value){
-            if($helperObj[$key] !== $schedObj -> {$key}) {
+            if($helperObj[$key] !== $schedObj[$key]) {
                 return false;
             }
         }

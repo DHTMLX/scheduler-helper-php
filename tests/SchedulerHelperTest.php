@@ -62,11 +62,11 @@ class SchedulerHelperTest extends \PHPUnit_Framework_TestCase
                 }
 
                 $this->_baseHelper->resetTable();
-                $this->_baseHelper->insertDataFromJSON($source->{'data'});
+                $this->_baseHelper->insertDataFromJSON($source['data']);
 
-                $helperData = $schedHelper->getData($source->settings->start_date, $source->settings->end_date);
+                $helperData = $schedHelper->getData($source["settings"]["start_date"], $source["settings"]["end_date"]);
                 $dataHelp->writeObjectToFile($helperData, "_helperData.txt", $dataPacks[$i]);
-                $this->assertTrue($dataHelp->compareDataBunches($helperData, $target->data, TestConfig::$fields),
+                $this->assertTrue($dataHelp->compareDataBunches($helperData, $target["data"], TestConfig::$fields),
                     "Helper and Scheduler data has difference");
             }
         }
