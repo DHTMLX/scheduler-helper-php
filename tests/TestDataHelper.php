@@ -80,4 +80,15 @@ class TestDataHelper
 
         return true;
     }
+
+    public function writeObjectToFile($obj, $name, $bunch="")
+    {
+        ob_start();
+        var_dump($obj);
+        $output = ob_get_clean();
+        if ($bunch)
+            $bunch = "/$bunch";
+        $file = dirname(__FILE__) . "/" . $this->_dataFolder . $bunch . "/" . $name;
+        file_put_contents($file, $output);
+    }
 }
