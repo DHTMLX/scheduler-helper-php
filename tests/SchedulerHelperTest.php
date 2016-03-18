@@ -117,7 +117,56 @@ class SchedulerHelperTest extends \PHPUnit_Framework_TestCase
 
                 $dataFromBase = $this->_baseHelper->getDataFromBase();
 
-                $dataHelp->writeObjectToFile($dataFromBase, "_insertDataFromBase.txt", $dataPacks[$i]);
+                $dataHelp->writeObjectToFile($dataFromBase, "_dataFromBase.txt", $dataPacks[$i]);
+                $this->assertTrue($dataHelp->compareDataBunches($target["data"], $dataFromBase, TestConfig::$fields),
+                    "Helper and Scheduler data has difference");
+            }
+        }
+
+        $this->_logger->logEnd($testName);
+    }
+
+    public function testSaveData_Update(){
+        $testName = "saveDataUpdate";
+        $this->_logger->logStart($testName);
+        $schedHelper = new Helper(
+            array(
+                "dbsm" => TestConfig::DBSM,
+                "host" => TestConfig::HOST,
+                "db_name" => TestConfig::DB_NAME,
+                "user" => TestConfig::USER,
+                "password" => TestConfig::PASSWORD,
+                "table_name" => TestConfig::TEMP_TABLE_NAME
+            )
+        );
+        $schedHelper->setFieldsNames(array(
+            $schedHelper::FLD_ID => "id",
+        ));
+
+        $dataHelp = new TestDataHelper($testName);
+        $dataPacks = $dataHelp->getTestDataList();
+        if($dataPacks) {
+            for ($i = 0; $i < count($dataPacks); $i++) {
+                $this->_logger->logStep($testName);
+                $this->_logger->info("$dataPacks[$i] bunch processing....");
+                $source = $dataHelp->getTestSourceData($dataPacks[$i]);
+                $target = $dataHelp->getTestTargetData($dataPacks[$i]);
+
+
+                if(!$source || !$target){
+                    $this->_logger->warning("There is no data. Bunch is skipped");
+                    continue;
+                }
+
+                $this->_baseHelper->resetTable();
+
+                $this->_baseHelper->insertDataFromJSON($source["insert_data"]);
+                $sourceData = $dataHelp->prepateDataForHelper($source["data"], $schedHelper);
+                $dataHelp->saveDataWithHelper($sourceData, $schedHelper);
+
+                $dataFromBase = $this->_baseHelper->getDataFromBase();
+
+                $dataHelp->writeObjectToFile($dataFromBase, "_dataFromBase.txt", $dataPacks[$i]);
                 $this->assertTrue($dataHelp->compareDataBunches($target["data"], $dataFromBase, TestConfig::$fields),
                     "Helper and Scheduler data has difference");
             }

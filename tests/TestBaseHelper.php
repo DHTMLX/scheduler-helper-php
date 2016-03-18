@@ -84,7 +84,7 @@ class TestBaseHelper
             $event = $data[$i];
             $elNumb = 1;
             foreach($f as $name=>$type) {
-                $sql .= isset($event[$name]) && !is_null($event[$name]) ? "'".$event[$name]."'":"''";
+                $sql .= isset($event[$name]) && !is_null($event[$name]) ? "'".$event[$name]."'":"NULL";
 
                 if ($elNumb++ != $fieldsCount)
                     $sql .= ",";
