@@ -99,4 +99,13 @@ class TestBaseHelper
         $conn->prepare($sql)->execute();
         $this->closeConnection();
     }
+
+    public function getDataFromBase(){
+        $sql = "SELECT * FROM $this->_table_name";
+        $conn = $this->getConnection()->prepare($sql);
+        $conn->execute();
+        $data = $conn->fetchAll();
+        $this->closeConnection();
+        return $data;
+    }
 }

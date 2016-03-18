@@ -49,7 +49,9 @@ class TestDataHelper
     public function compareDataObjects($helperObj, $schedObj, $fields)
     {
         foreach($fields as $key=>$value){
-            if($helperObj[$key] !== $schedObj[$key]) {
+            $hVal = isset($helperObj[$key]) ? $helperObj[$key]: "";
+            $sVal = isset($schedObj[$key])? $schedObj[$key] : "";
+            if($hVal != $sVal) {
                 return false;
             }
         }
@@ -90,5 +92,23 @@ class TestDataHelper
             $bunch = "/$bunch";
         $file = dirname(__FILE__) . "/" . $this->_dataFolder . $bunch . "/" . $name;
         file_put_contents($file, $output);
+    }
+
+    public function prepateDataForHelper($data, $helper)
+    {
+        foreach ($data as &$event) {
+            if (!isset($event["end_date"])) {
+                $event["end_date"] = $helper->getRecurringEndDateStr($event["recurring_type"], $event["start_date"], $event["length"]);
+            }
+        }
+
+        return $data;
+    }
+
+    public function saveDataWithHelper($data, $helper)
+    {
+        foreach($data as $event){
+            $helper->saveData($event);
+        }
     }
 }
