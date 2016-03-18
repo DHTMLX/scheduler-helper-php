@@ -100,8 +100,11 @@ class TestBaseHelper
         $this->closeConnection();
     }
 
-    public function getDataFromBase(){
+    public function getDataFromBase($id = NULL){
         $sql = "SELECT * FROM $this->_table_name";
+        if(!is_null($id)){
+            $sql .= " WHERE id=$id";
+        }
         $conn = $this->getConnection()->prepare($sql);
         $conn->execute();
         $data = $conn->fetchAll();

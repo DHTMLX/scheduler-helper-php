@@ -28,7 +28,7 @@ class SchedulerHelperTest extends \PHPUnit_Framework_TestCase
 
     public function __destruct()
     {
-        // TODO: Implement __destruct() method.
+        $this->_baseHelper->dropTable();
     }
 
     public function testGetData()
@@ -169,6 +169,53 @@ class SchedulerHelperTest extends \PHPUnit_Framework_TestCase
                 $dataHelp->writeObjectToFile($dataFromBase, "_dataFromBase.txt", $dataPacks[$i]);
                 $this->assertTrue($dataHelp->compareDataBunches($target["data"], $dataFromBase, TestConfig::$fields),
                     "Helper and Scheduler data has difference");
+            }
+        }
+
+        $this->_logger->logEnd($testName);
+    }
+
+    public function testdeleteById(){
+        $testName = "deleteById";
+        $this->_logger->logStart($testName);
+        $schedHelper = new Helper(
+            array(
+                "dbsm" => TestConfig::DBSM,
+                "host" => TestConfig::HOST,
+                "db_name" => TestConfig::DB_NAME,
+                "user" => TestConfig::USER,
+                "password" => TestConfig::PASSWORD,
+                "table_name" => TestConfig::TEMP_TABLE_NAME
+            )
+        );
+        $schedHelper->setFieldsNames(array(
+            $schedHelper::FLD_ID => "id",
+        ));
+
+        $dataHelp = new TestDataHelper($testName);
+        $dataPacks = $dataHelp->getTestDataList();
+        if($dataPacks) {
+            for ($i = 0; $i < count($dataPacks); $i++) {
+                $this->_logger->logStep($testName);
+                $this->_logger->info("$dataPacks[$i] bunch processing....");
+                $source = $dataHelp->getTestSourceData($dataPacks[$i]);
+
+
+                if(!$source){
+                    $this->_logger->warning("There is no data. Bunch is skipped");
+                    continue;
+                }
+
+                $this->_baseHelper->resetTable();
+
+                $this->_baseHelper->insertDataFromJSON($source["insert_data"]);
+
+                foreach($source["data"] as $event){
+                    $schedHelper->deleteById($event["id"]);
+                    $dataFromBase = $this->_baseHelper->getDataFromBase($event["id"]);
+                    $this->assertTrue(count($dataFromBase) === 0,
+                        "Event wasn't removed");
+                }
             }
         }
 

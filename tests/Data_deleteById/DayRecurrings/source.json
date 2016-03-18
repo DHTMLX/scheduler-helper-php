@@ -1,0 +1,28 @@
+{
+  "insert_data": [
+    {
+      "id": "1",
+      "start_date": "2015-02-04 11:00:00",
+      "end_date": "2015-02-04 19:30:00",
+      "text": "Event X1",
+      "rec_type": "",
+      "event_length": ""
+    },
+    {
+      "id": "2",
+      "start_date": "2020-07-09 11:00:00",
+      "end_date": "2020-07-09 19:20:00",
+      "text": "Event X2",
+      "rec_type": "day_1___#3",
+      "event_length": "600"
+    }
+  ],
+  "data": [
+    {
+      "id": 1
+    },
+    {
+      "id": 2
+    }
+  ]
+}
