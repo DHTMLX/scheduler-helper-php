@@ -29,36 +29,37 @@
     {
       "id": 1,
       "recurring_type": {
-        "each": "day",
-        "step": 1
+        "each": "week",
+        "step": 2,
+        "days_of_week": "sunday,monday,tuesday,wednesday,thursday,friday,saturday"
       },
-      "start_date": "2016-03-08 11:35:00",
-      "end_date": "9999-02-01 00:00:00",
-      "length": 19200,
-      "text": "Test Event 1"
+      "start_date": "2016-03-01 12:20:00",
+      "length": 11400,
+      "text": "Test Week Event 1"
     },
     {
       "id": 2,
       "recurring_type": {
-        "each": "day",
-        "step": 2,
-        "repeat": 33
+        "each": "week",
+        "repeat": 17,
+        "days_of_week": "monday,wednesday,friday"
+
       },
-      "start_date": "2016-03-03 00:00:00",
-      "length": 300,
-      "text": "Test Event 2"
+      "start_date": "2016-03-02 20:00:00",
+      "length": 11400,
+      "text": "Test Week Event 2"
     },
     {
       "id": 3,
       "recurring_type": {
         "each": "week",
-        "step": 1,
-        "days_of_week": "monday,tuesday,wednesday,thursday,friday"
+        "step": 3,
+        "days_of_week": "monday,wednesday"
       },
-      "start_date": "2016-03-01 00:00:00",
+      "start_date": "2016-03-02 15:55:00",
       "end_date": "2016-08-21 00:00:00",
-      "length": 300,
-      "text": "Test Event 3"
+      "length": 6000,
+      "text": "Test Week Event 3"
     }
   ]
 }

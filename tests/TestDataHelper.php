@@ -97,7 +97,7 @@ class TestDataHelper
     public function prepateDataForHelper($data, $helper)
     {
         foreach ($data as &$event) {
-            if (!isset($event["end_date"])) {
+            if (!isset($event["end_date"]) && isset($event["recurring_type"]) && isset($event["length"])) {
                 $event["end_date"] = $helper->getRecurringEndDateStr($event["recurring_type"], $event["start_date"], $event["length"]);
             }
         }

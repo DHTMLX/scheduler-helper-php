@@ -65,17 +65,6 @@
       "rec_pattern": "year_1___",
       "rec_type": "year_1___#no",
       "!nativeeditor_status": ""
-    },
-    {
-      "start_date": "2016-04-01 00:00:00",
-      "end_date": "9999-02-01 00:00:00",
-      "text": "Test Event 6",
-      "id": "7",
-      "event_pid": "",
-      "event_length": "300",
-      "rec_pattern": "year_1_5_4_",
-      "rec_type": "year_1_5_4_#no",
-      "!nativeeditor_status": ""
     }
   ],
   "data": [
