@@ -34,7 +34,8 @@
         "days_of_week": "sunday,monday,tuesday,wednesday,thursday,friday,saturday"
       },
       "start_date": "2016-03-01 12:20:00",
-      "length": 11400,
+      "end_date": "9999-02-01 00:00:00",
+      "length": 300,
       "text": "Test Week Event 1"
     },
     {
@@ -42,11 +43,13 @@
       "recurring_type": {
         "each": "week",
         "repeat": 17,
-        "days_of_week": "monday,wednesday,friday"
+        "step": 1,
+        "days_of_week": "monday,wednesday,thursday,friday"
 
       },
       "start_date": "2016-03-02 20:00:00",
-      "length": 11400,
+      "end_date": "2016-03-31 00:00:00",
+      "length": 300,
       "text": "Test Week Event 2"
     },
     {
@@ -58,7 +61,7 @@
       },
       "start_date": "2016-03-02 15:55:00",
       "end_date": "2016-08-21 00:00:00",
-      "length": 6000,
+      "length": 600,
       "text": "Test Week Event 3"
     }
   ]

@@ -1,0 +1,40 @@
+{
+  "data": [
+    {
+      "start_date": "2016-03-08 11:40:00",
+      "end_date": "9999-02-01 00:00:00",
+      "text": "Test Year 1",
+      "id": "1",
+      "event_pid": "",
+      "event_length": "6600",
+      "rec_type": "year_1___#no"
+    },
+    {
+      "start_date": "2016-03-01 10:35:00",
+      "end_date": "2020-03-02 10:35:00",
+      "text": "Test Year 2",
+      "id": "2",
+      "event_pid": "",
+      "event_length": "30000",
+      "rec_type": "year_1_1_1_#4"
+    },
+    {
+      "start_date": "2016-12-01 22:00:00",
+      "end_date": "2019-04-21 00:00:00",
+      "text": "Test Year 3",
+      "id": "3",
+      "event_pid": "",
+      "event_length": "3900",
+      "rec_type": "year_1_7_4_#"
+    },
+    {
+      "start_date": "2016-01-01 10:40:00",
+      "end_date": "9999-02-01 00:00:00",
+      "text": "Test Year 4",
+      "id": "4",
+      "event_pid": "",
+      "event_length": "47700",
+      "rec_type": "year_1_2_1_#no"
+    }
+  ]
+}
