@@ -1,18 +1,20 @@
 {
   "data": [
     {
-      "rec_type": "day_1___#10",
       "start_date": "2016-03-08 10:15:00",
-      "end_date": "2016-03-18 10:25:00",
-      "event_length": 600,
-      "text": "Test Event 1"
+      "end_date": "2016-03-18 10:15:00",
+      "text": "Test Event 1",
+      "event_pid": "",
+      "event_length": "600",
+      "rec_type": "day_1___#10"
     },
     {
-      "rec_type": "day_1___#5",
       "start_date": "2016-03-08 10:15:00",
-      "end_date": "2016-03-13 10:20:00",
-      "event_length": 300,
-      "text": "Test Event 2"
+      "end_date": "2016-03-13 10:15:00",
+      "text": "Test Event 2",
+      "event_pid": "",
+      "event_length": "300",
+      "rec_type": "day_1___#5"
     }
   ]
 }

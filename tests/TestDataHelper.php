@@ -17,6 +17,14 @@ class TestDataHelper
         return json_decode(file_get_contents($file),true);
     }
 
+    private function correctNoEndRecType($type){
+        $noPos = strpos($type, "#no");
+        if($noPos){
+            $type = substr_replace($type, "", $noPos + 1);
+        }
+        return $type;
+    }
+
     public function __construct($testName)
     {
         $this->_dataFolder = self::DATA_FOLDER_PREFIX . $testName;
@@ -51,6 +59,10 @@ class TestDataHelper
         foreach($fields as $key=>$value){
             $hVal = isset($helperObj[$key]) ? $helperObj[$key]: "";
             $sVal = isset($schedObj[$key])? $schedObj[$key] : "";
+            if($key == "rec_type"){
+                $sVal = $this->correctNoEndRecType($sVal);
+                $hVal = $this->correctNoEndRecType($hVal);
+            }
             if($hVal != $sVal) {
                 return false;
             }
