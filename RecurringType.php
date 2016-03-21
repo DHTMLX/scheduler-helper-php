@@ -251,12 +251,16 @@ class RecurringType {
             return $recurringInterval;
 
         //Correct start date interval if it smaller then recurring start date.
-        if ($intervalStartDateStamp < $recurringStartDateStamp)
+        if ($intervalStartDateStamp < $recurringStartDateStamp) {
             $intervalStartDateStamp = $recurringStartDateStamp;
+            $recurringInterval["start_date_stamp"] = $intervalStartDateStamp;
+        }
 
         //Correct end date interval if it smaller then recurring end date.
-        if ($intervalEndDateStamp > $recurringEndDateStamp)
+        if ($intervalEndDateStamp > $recurringEndDateStamp){
             $intervalEndDateStamp = $recurringEndDateStamp;
+            $recurringInterval["end_date_stamp"] = $intervalEndDateStamp;
+        }
 
         $type = $this->getRecurringTypeValue();
         //If recurring type is "year" then exit, else add months.
