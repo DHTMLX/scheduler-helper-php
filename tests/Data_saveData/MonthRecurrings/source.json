@@ -1,0 +1,48 @@
+{
+  "data": [
+    {
+      "recurring_type": {
+        "each": "month",
+        "step": 3
+      },
+      "start_date": "2016-03-13 12:00:00",
+      "end_date": "9999-02-01 00:00:00",
+      "length": 2100,
+      "text": "Test Month 1"
+    },
+    {
+      "recurring_type": {
+        "each": "month",
+        "repeat": 6,
+        "week_number": 4,
+        "days_of_week": "friday",
+        "step": 1
+      },
+      "start_date": "2016-03-01 15:00:00",
+      "length": 17700,
+      "text": "Test Month 2"
+    },
+    {
+      "recurring_type": {
+        "each": "month",
+        "step": 1,
+        "days_of_week": "wednesday",
+        "week_number": 1
+      },
+      "start_date": "2016-03-01 10:00:00",
+      "end_date": "2016-08-21 00:00:00",
+      "length": 26100,
+      "text": "Test Month 3"
+    },
+    {
+      "recurring_type": {
+        "each": "month",
+        "step": 1
+      },
+      "start_date": "2016-03-30 02:50:00",
+      "end_date": "9999-02-01 00:00:00",
+      "length": 18000,
+      "text": "Test Month 4"
+    }
+  ]
+}
