@@ -407,7 +407,7 @@ class RecurringType {
 
         $maxEndDateStamp = NULL;
         foreach($recurringStartDatesStamps as $startDateStamp) {
-            $endDateStamp = $startDateStamp + $eventLength;
+            $endDateStamp = $startDateStamp;
             $maxEndDateStamp = ($endDateStamp > $maxEndDateStamp) ? $endDateStamp : $maxEndDateStamp;
         }
 
