@@ -112,9 +112,14 @@ class RecurringType {
                 case $dataFields[self::FLD_WEEK_DAYS_LIST]:
                     $weekDaysToRecurring = explode(",", $value);
                     $days = array();
+                    $repeatVal = str_replace(" ", "", $dataArray[$dataFields[self::FLD_REC_TYPE]]);
+                    if($repeatVal == "year"){
+                        $daysOfWeek["sunday"] = 7;
+                    }
+
                     foreach($weekDaysToRecurring as $day) {
                         $day = str_replace(" ", "", $day);
-                        if(!in_array($day, $daysOfWeek))
+                        if(!isset($daysOfWeek[$day]))
                             throw new Exception("Field {$field} will contains data like 'monday,tuesday,wednesday'.");
 
                         array_push($days, $daysOfWeek[$day]);
