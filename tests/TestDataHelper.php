@@ -56,14 +56,17 @@ class TestDataHelper
 
     public function compareDataObjects($helperObj, $schedObj, $fields)
     {
-        foreach($fields as $key=>$value){
-            $hVal = isset($helperObj[$key]) ? $helperObj[$key]: "";
-            $sVal = isset($schedObj[$key])? $schedObj[$key] : "";
-            if($key == "rec_type"){
+        foreach($fields as $key=>$value) {
+            $hVal = isset($helperObj[$key]) ? $helperObj[$key] : "";
+            $sVal = isset($schedObj[$key]) ? $schedObj[$key] : "";
+            if ($key == "rec_type") {
                 $sVal = $this->correctNoEndRecType($sVal);
                 $hVal = $this->correctNoEndRecType($hVal);
+            } elseif ($key == "event_length" || $key == "event_pid") {
+                $sVal = $sVal == 0 ? "" : $sVal;
+                $hVal = $hVal == 0 ? "" : $hVal;
             }
-            if($hVal != $sVal) {
+            if ($hVal != $sVal) {
                 return false;
             }
         }
