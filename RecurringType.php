@@ -311,9 +311,11 @@ class RecurringType {
     /**
      * Get recurring days for date.
      * @param $dateStamp
+     * @param $start
+     * $param $end
      * @return array
      */
-    private function _getRecurringDays($dateStamp)
+    private function _getRecurringDays($dateStamp, $start = NULL, $end = NULL)
     {
         $recurringDays = array();
 
@@ -323,18 +325,24 @@ class RecurringType {
             $daysCount = count($recurringWeekDays);
             for($i = 0; $i < $daysCount; $i++) {
                 $dayStep = $this->_getRecurringDayStep($dateStamp, $recurringWeekDays[$i]);
-                array_push($recurringDays, SchedulerHelperDate::addDays($dateStamp, $dayStep));
+                $stamp = SchedulerHelperDate::addDays($dateStamp, $dayStep);
+                if((!$start || $stamp >= $start) && (!$end|| $stamp < $end))
+                    array_push($recurringDays, $stamp);
             }
         }
         //Else if recurring type has day of week and step for it, then get this day.
         elseif($this->getWeekDayValue() && $this->getWeekNumberValue()) {
             $dayStep = $this->_getRecurringDayStep($dateStamp, $this->getWeekDayValue());
             $dayStep += (SchedulerHelperDate::DAYS_IN_WEEK * ($this->getWeekNumberValue() - 1));
-            array_push($recurringDays, SchedulerHelperDate::addDays($dateStamp, $dayStep));
+            $stamp = SchedulerHelperDate::addDays($dateStamp, $dayStep);
+            if((!$start || $stamp >= $start) && (!$end|| $stamp < $end))
+                array_push($recurringDays, $stamp);
         }
         //Else return recurring date without change.
-        else
-            array_push($recurringDays, $dateStamp);
+        else {
+            if((!$start || $dateStamp >= $start) && (!$end|| $dateStamp < $end))
+                array_push($recurringDays, $dateStamp);
+        }
 
         return $recurringDays;
     }
@@ -360,6 +368,8 @@ class RecurringType {
         $intervalEndDateStamp = $correctedInterval["end_date_stamp"];
         $currentRecurringStartDateStamp = $intervalStartDateStamp;
         $recurringDates = array();
+        $recurringStartDateStamp = $this->_recurring_start_date_stamp;
+        $recurringEndDateStamp = $this->_recurring_end_date_stamp;
 
         //Generate dates wile next recurring date belongs to interval.
         $countRecurringCycles = 0;
@@ -371,7 +381,7 @@ class RecurringType {
             )
         ) {
             $countRecurringCycles++;
-            $recurringDays = $this->_getRecurringDays($currentRecurringStartDateStamp);
+            $recurringDays = $this->_getRecurringDays($currentRecurringStartDateStamp, $recurringStartDateStamp, $recurringEndDateStamp);
             $recurringDates = array_merge($recurringDates, $recurringDays);
 
             switch($recType) {
