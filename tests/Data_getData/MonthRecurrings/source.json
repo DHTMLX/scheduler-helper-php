@@ -1,0 +1,38 @@
+{
+  "settings": {
+    "start_date": "2016-02-01 00:00:00",
+    "end_date": "2016-09-31 24:00:00"
+  },
+  "data": [
+    {
+      "id": "12",
+      "start_date": "2016-03-01 00:00:00",
+      "end_date": "9999-02-01 00:00:00",
+      "text": "Month event 1",
+      "rec_type": "month_1___#no",
+      "event_pid": "0",
+      "event_length": "11400",
+      "rec_pattern": "month_1___"
+    },
+    {
+      "id": "13",
+      "start_date": "2016-03-03 00:00:00",
+      "end_date": "2016-09-03 00:00:00",
+      "text": "Month Event 2",
+      "rec_type": "month_2___#3",
+      "event_pid": "0",
+      "event_length": "300",
+      "rec_pattern": "month_2___"
+    },
+    {
+      "id": "14",
+      "start_date": "2016-01-01 15:00:00",
+      "end_date": "2016-05-21 00:00:00",
+      "text": "Month event 3 before",
+      "rec_type": "month_1_5_4_#",
+      "event_pid": "0",
+      "event_length": "10800",
+      "rec_pattern": "month_1_5_4_"
+    }
+  ]
+}

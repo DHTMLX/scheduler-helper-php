@@ -1,0 +1,40 @@
+{
+  "data": [
+    {
+      "start_date": "2016-03-13 12:00:00",
+      "end_date": "9999-02-01 00:00:00",
+      "text": "Test Month 1",
+      "id": "1",
+      "event_pid": "",
+      "event_length": "2100",
+      "rec_type": "month_3___#no"
+    },
+    {
+      "start_date": "2016-03-01 15:00:00",
+      "end_date": "2016-09-23 15:00:00",
+      "text": "Test Month 2",
+      "id": "2",
+      "event_pid": "",
+      "event_length": "17700",
+      "rec_type": "month_1_5_4_#6"
+    },
+    {
+      "start_date": "2016-03-01 10:00:00",
+      "end_date": "2016-08-21 00:00:00",
+      "text": "Test Month 3",
+      "id": "3",
+      "event_pid": "",
+      "event_length": "26100",
+      "rec_type": "month_1_3_1_#"
+    },
+    {
+      "start_date": "2016-03-30 02:50:00",
+      "end_date": "9999-02-01 00:00:00",
+      "text": "Test Month 4",
+      "id": "4",
+      "event_pid": "",
+      "event_length": "18000",
+      "rec_type": "month_1___#no"
+    }
+  ]
+}

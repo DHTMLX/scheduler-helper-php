@@ -1,0 +1,24 @@
+{
+  "data": [
+    {
+      "recurring_type": {
+        "each": "day",
+        "step": 1,
+        "repeat": 10
+      },
+      "start_date": "2016-03-08 10:15:00",
+      "length": 600,
+      "text": "Test Event 1"
+    },
+    {
+      "recurring_type": {
+        "each": "day",
+        "step": 1,
+        "repeat": 5
+      },
+      "start_date": "2016-03-08 10:15:00",
+      "length": 300,
+      "text": "Test Event 2"
+    }
+  ]
+}
