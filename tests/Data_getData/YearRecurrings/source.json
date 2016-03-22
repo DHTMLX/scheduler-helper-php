@@ -1,0 +1,58 @@
+{
+  "settings": {
+    "start_date": "2016-01-01 00:00:00",
+    "end_date": "2017-01-01 00:00:00"
+  },
+  "data": [
+    {
+      "id": "7",
+      "start_date": "2015-01-01 00:00:00",
+      "end_date": "2018-01-01 00:00:00",
+      "text": "Year Event 1",
+      "rec_type": "year_1___#3",
+      "event_pid": "0",
+      "event_length": "300",
+      "rec_pattern": "year_1___"
+    },
+    {
+      "id": "8",
+      "start_date": "2016-03-01 18:00:00",
+      "end_date": "2019-03-22 18:00:00",
+      "text": "Year Event 2",
+      "rec_type": "year_1_5_4_#3",
+      "event_pid": "0",
+      "event_length": "12000",
+      "rec_pattern": "year_1_5_4_"
+    },
+    {
+      "id": "9",
+      "start_date": "2016-05-01 00:00:00",
+      "end_date": "9999-02-01 00:00:00",
+      "text": "Year Event 3",
+      "rec_type": "year_1_1_1_#no",
+      "event_pid": "0",
+      "event_length": "300",
+      "rec_pattern": "year_1_1_1_"
+    },
+    {
+      "id": "10",
+      "start_date": "2015-02-10 00:00:00",
+      "end_date": "2020-04-22 00:00:00",
+      "text": "Year Event 4",
+      "rec_type": "year_1___#",
+      "event_pid": "0",
+      "event_length": "300",
+      "rec_pattern": "year_1___"
+    },
+    {
+      "id": "11",
+      "start_date": "2015-12-01 00:00:00",
+      "end_date": "9999-02-01 00:00:00",
+      "text": "Year Event 5",
+      "rec_type": "year_1_7_4_#no",
+      "event_pid": "0",
+      "event_length": "300",
+      "rec_pattern": "year_1_7_4_"
+    }
+  ]
+}
