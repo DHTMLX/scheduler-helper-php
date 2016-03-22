@@ -1,0 +1,76 @@
+{
+  "data": [
+    {
+      "start_date": "2016-03-01 10:00:00",
+      "end_date": "2016-03-01 16:05:00",
+      "event_pid": "0",
+      "text": "Week event 1",
+      "id": "1",
+      "rec_type": "week_2___0,1,2,3,4,5,6#8",
+      "event_length": 21900
+    },
+    {
+      "start_date": "2016-03-02 10:00:00",
+      "end_date": "2016-03-02 16:05:00",
+      "event_pid": "0",
+      "text": "Week event 1",
+      "id": "1",
+      "rec_type": "week_2___0,1,2,3,4,5,6#8",
+      "event_length": 21900
+    },
+    {
+      "start_date": "2016-03-03 10:00:00",
+      "end_date": "2016-03-03 16:05:00",
+      "event_pid": "0",
+      "text": "Week event 1",
+      "id": "1",
+      "rec_type": "week_2___0,1,2,3,4,5,6#8",
+      "event_length": 21900
+    },
+    {
+      "start_date": "2016-03-04 10:00:00",
+      "end_date": "2016-03-04 16:05:00",
+      "event_pid": "0",
+      "text": "Week event 1",
+      "id": "1",
+      "rec_type": "week_2___0,1,2,3,4,5,6#8",
+      "event_length": 21900
+    },
+    {
+      "start_date": "2016-03-05 10:00:00",
+      "end_date": "2016-03-05 16:05:00",
+      "event_pid": "0",
+      "text": "Week event 1",
+      "id": "1",
+      "rec_type": "week_2___0,1,2,3,4,5,6#8",
+      "event_length": 21900
+    },
+    {
+      "start_date": "2016-03-06 10:00:00",
+      "end_date": "2016-03-06 16:05:00",
+      "event_pid": "0",
+      "text": "Week event 1",
+      "id": "1",
+      "rec_type": "week_2___0,1,2,3,4,5,6#8",
+      "event_length": 21900
+    },
+    {
+      "start_date": "2016-03-14 10:00:00",
+      "end_date": "2016-03-14 16:05:00",
+      "event_pid": "0",
+      "text": "Week event 1",
+      "id": "1",
+      "rec_type": "week_2___0,1,2,3,4,5,6#8",
+      "event_length": 21900
+    },
+    {
+      "start_date": "2016-03-15 10:00:00",
+      "end_date": "2016-03-15 16:05:00",
+      "event_pid": "0",
+      "text": "Week event 1",
+      "id": "1",
+      "rec_type": "week_2___0,1,2,3,4,5,6#8",
+      "event_length": 21900
+    }
+  ]
+}
