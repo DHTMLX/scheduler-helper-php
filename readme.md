@@ -121,9 +121,12 @@ To get data of the recurring events, use the method 'getData([$startDateStr], [$
 #####Tests
 
 In order to run tests:
-    * Install PHPUnit following this instruction https://phpunit.de/manual/current/en/installation.html
-    * Configure DB settings in tests/TestConfig.php
-    * Enter repository folder and execute
+
+1. Install PHPUnit following this instruction https://phpunit.de/manual/current/en/installation.html
+
+2. Configure DB settings in tests/TestConfig.php
+
+3. Enter repository folder and execute
 
 ```
     phpunit --bootstrap SchedulerHelper.php tests/SchedulerHelperTest
