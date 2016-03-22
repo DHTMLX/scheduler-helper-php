@@ -11,6 +11,24 @@ class SchedulerHelperTest extends \PHPUnit_Framework_TestCase
     private $_baseHelper;
     private $_logger;
 
+    private function getHelper(){
+        $schedHelper = new Helper(
+            array(
+                "dbsm" => TestConfig::DBSM,
+                "host" => TestConfig::HOST,
+                "db_name" => TestConfig::DB_NAME,
+                "user" => TestConfig::USER,
+                "password" => TestConfig::PASSWORD,
+                "table_name" => TestConfig::TEMP_TABLE_NAME
+            )
+        );
+        $schedHelper->setFieldsNames(array(
+            $schedHelper::FLD_ID => "id",
+        ));
+        
+        return $schedHelper;
+    }
+    
     public function __construct()
     {
         $this->_logger = new Logger();
@@ -36,20 +54,7 @@ class SchedulerHelperTest extends \PHPUnit_Framework_TestCase
         $testName = "getData";
 
         $this->_logger->logStart($testName);
-        $schedHelper = new Helper(
-            array(
-                "dbsm" => TestConfig::DBSM,
-                "host" => TestConfig::HOST,
-                "db_name" => TestConfig::DB_NAME,
-                "user" => TestConfig::USER,
-                "password" => TestConfig::PASSWORD,
-                "table_name" => TestConfig::TEMP_TABLE_NAME
-            )
-        );
-        $schedHelper->setFieldsNames(array(
-            $schedHelper::FLD_ID => "id",
-        ));
-
+        $schedHelper = $this->getHelper();
 
         $dataHelp = new TestDataHelper($testName);
         $dataPacks = $dataHelp->getTestDataList();
@@ -82,19 +87,7 @@ class SchedulerHelperTest extends \PHPUnit_Framework_TestCase
     public function testSaveData_Insert(){
         $testName = "saveData";
         $this->_logger->logStart($testName);
-        $schedHelper = new Helper(
-            array(
-                "dbsm" => TestConfig::DBSM,
-                "host" => TestConfig::HOST,
-                "db_name" => TestConfig::DB_NAME,
-                "user" => TestConfig::USER,
-                "password" => TestConfig::PASSWORD,
-                "table_name" => TestConfig::TEMP_TABLE_NAME
-            )
-        );
-        $schedHelper->setFieldsNames(array(
-            $schedHelper::FLD_ID => "id",
-        ));
+        $schedHelper =  $this->getHelper();
 
         $dataHelp = new TestDataHelper($testName);
         $dataPacks = $dataHelp->getTestDataList();
@@ -129,19 +122,7 @@ class SchedulerHelperTest extends \PHPUnit_Framework_TestCase
     public function testSaveData_Update(){
         $testName = "saveDataUpdate";
         $this->_logger->logStart($testName);
-        $schedHelper = new Helper(
-            array(
-                "dbsm" => TestConfig::DBSM,
-                "host" => TestConfig::HOST,
-                "db_name" => TestConfig::DB_NAME,
-                "user" => TestConfig::USER,
-                "password" => TestConfig::PASSWORD,
-                "table_name" => TestConfig::TEMP_TABLE_NAME
-            )
-        );
-        $schedHelper->setFieldsNames(array(
-            $schedHelper::FLD_ID => "id",
-        ));
+        $schedHelper =  $this->getHelper();
 
         $dataHelp = new TestDataHelper($testName);
         $dataPacks = $dataHelp->getTestDataList();
@@ -178,19 +159,7 @@ class SchedulerHelperTest extends \PHPUnit_Framework_TestCase
     public function testdeleteById(){
         $testName = "deleteById";
         $this->_logger->logStart($testName);
-        $schedHelper = new Helper(
-            array(
-                "dbsm" => TestConfig::DBSM,
-                "host" => TestConfig::HOST,
-                "db_name" => TestConfig::DB_NAME,
-                "user" => TestConfig::USER,
-                "password" => TestConfig::PASSWORD,
-                "table_name" => TestConfig::TEMP_TABLE_NAME
-            )
-        );
-        $schedHelper->setFieldsNames(array(
-            $schedHelper::FLD_ID => "id",
-        ));
+        $schedHelper = $this->getHelper();
 
         $dataHelp = new TestDataHelper($testName);
         $dataPacks = $dataHelp->getTestDataList();
