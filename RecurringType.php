@@ -32,6 +32,8 @@ class RecurringType {
     private $_fields_values = array();
     private $_recurring_start_date_stamp;
     private $_recurring_end_date_stamp;
+    
+    public static $start_on_monday = true;
 
     public function __construct($recurringType, $recurringStartDateStamp, $recurringEndDateStamp)
     {
@@ -303,8 +305,10 @@ class RecurringType {
     private function _getRecurringDayStep($dateStamp, $recurringWeekDay)
     {
         $weekDay = SchedulerHelperDate::getDayOfWeek($dateStamp);
+        if(self::$start_on_monday) {
+            $recurringWeekDay = $recurringWeekDay == 0 ? 7 : $recurringWeekDay;
+        }
         $dayStep = $recurringWeekDay - $weekDay;
-        $dayStep = ($dayStep < 0) ? (SchedulerHelperDate::DAYS_IN_WEEK - (-$dayStep)) : $dayStep;
         return $dayStep;
     }
 

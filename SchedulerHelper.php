@@ -32,7 +32,8 @@ abstract class DHelper extends SchedulerHelperConnector
 
 	public $config = array(
 		"debug" => true,
-		"server_date" => false
+		"server_date" => false,
+		"start_on_monay" => true
 	);
 
 	protected $_mapped_fields = array();
@@ -365,6 +366,7 @@ class Helper extends DHelper implements IHelper
 		$startField = $this->getStartDateFieldName();
 		$endField = $this->getEndDateFieldName();
 
+		RecurringType::$start_on_monday = $this->config["start_on_monay"];
 		$recCount = count($recurringEvents);
 		for($i = 0; $i < $recCount; $i++) {
 			$eventData = $recurringEvents[$i];
