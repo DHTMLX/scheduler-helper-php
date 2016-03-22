@@ -267,11 +267,12 @@ class RecurringType {
         $type = $this->getRecurringTypeValue();
         //If recurring type is "year" then exit, else add months.
         if ($type == self::REC_TYPE_DAY || $type == self::REC_TYPE_WEEK) {
-            $step = $this->_transpose_size[$type] * $this->getRecurringTypeStepValue();
-            $day = 24 * 60 * 60;
-            $delta = floor(($intervalStartDateStamp - $recurringStartDateStamp) / ($day * $step));
-            if ($delta > 0)
+            if($recurringStartDateStamp < $intervalStartDateStamp) {
+                $step = $this->_transpose_size[$type] * $this->getRecurringTypeStepValue();
+                $day = 24 * 60 * 60;
+                $delta = floor(($intervalStartDateStamp - $recurringStartDateStamp) / ($day * $step)) || 1;
                 $recurringInterval["start_date_stamp"] = $recurringStartDateStamp + $delta * $step * $day;
+            }
         }
         else {
             $differenceStartDates = SchedulerHelperDate::differenceBetweenDates($intervalStartDateStamp, $recurringStartDateStamp);
