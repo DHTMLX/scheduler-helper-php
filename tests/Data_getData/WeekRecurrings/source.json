@@ -6,13 +6,68 @@
   "data": [
     {
       "id": "1",
-      "start_date": "2016-03-01 10:00:00",
-      "end_date": "2016-03-16 10:00:00",
+      "start_date": "2016-02-01 10:00:00",
+      "end_date": "2016-04-16 10:00:00",
       "text": "Week event 1",
-      "rec_type": "week_2___0,1,2,3,4,5,6#8",
+      "rec_type": "week_2___0,1,2,3,4,5,6#40",
       "event_pid": "0",
       "event_length": "21900",
       "rec_pattern": "week_2___0,1,2,3,4,5,6",
+      "!nativeeditor_status": ""
+    },
+    {
+      "id": "2",
+      "start_date": "2016-03-08 12:45:00",
+      "end_date": "2016-03-27 00:00:00",
+      "text": "Week event 2",
+      "rec_type": "week_2___2,5#",
+      "event_pid": "",
+      "event_length": "14400",
+      "rec_pattern": "week_2___2,5",
+      "!nativeeditor_status": ""
+    },
+    {
+      "id": "3",
+      "start_date": "2016-03-12 00:00:00",
+      "end_date": "9999-02-01 00:00:00",
+      "text": "Week Event 3",
+      "rec_type": "week_2___0,6#no",
+      "event_pid": "",
+      "event_length": "300",
+      "rec_pattern": "week_2___0,6",
+      "!nativeeditor_status": ""
+    },
+    {
+      "id": "4",
+      "start_date": "2016-02-22 10:00:00",
+      "end_date": "2016-03-27 10:00:00",
+      "text": "Week Event 4",
+      "rec_type": "week_2___0,1,5#8",
+      "event_pid": "",
+      "event_length": "18000",
+      "rec_pattern": "week_2___0,1,5",
+      "!nativeeditor_status": ""
+    },
+    {
+      "id": "5",
+      "start_date": "2016-03-23 00:00:00",
+      "end_date": "2016-04-27 00:00:00",
+      "text": "Week Event 5",
+      "rec_type": "week_1___3#",
+      "event_pid": "",
+      "event_length": "300",
+      "rec_pattern": "week_1___3",
+      "!nativeeditor_status": ""
+    },
+    {
+      "id": "6",
+      "start_date": "2016-03-28 00:00:00",
+      "end_date": "9999-02-01 00:00:00",
+      "text": "Week Event 6",
+      "rec_type": "week_1___1,2,4,5#no",
+      "event_pid": "",
+      "event_length": "300",
+      "rec_pattern": "week_1___1,2,4,5",
       "!nativeeditor_status": ""
     }
   ]
