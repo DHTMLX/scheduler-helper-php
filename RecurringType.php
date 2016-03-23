@@ -277,7 +277,6 @@ class RecurringType {
         }
         else {
             $differenceStartDates = SchedulerHelperDate::differenceBetweenDates($intervalStartDateStamp, $recurringStartDateStamp);
-            $differenceEndDates = SchedulerHelperDate::differenceBetweenDates($intervalEndDateStamp, $recurringEndDateStamp);
             $dateUnits = SchedulerHelperDate::$DATE_UNITS;
 
             //Add years.
@@ -317,7 +316,7 @@ class RecurringType {
             $weekDays = ($weekNumber - 1) * SchedulerHelperDate::DAYS_IN_WEEK;
         }
 
-        $weekDay = SchedulerHelperDate::getDayOfWeek($dateStamp);
+        $weekDay = SchedulerHelperDate::getDayOfWeek($date->getTimestamp());
         $newDay = $recurringWeekDay + $weekDays - $weekDay + 1;
 
         $newDay = $newDay <= $weekDays ? $newDay + SchedulerHelperDate::DAYS_IN_WEEK : $newDay;
@@ -355,6 +354,9 @@ class RecurringType {
 
         //If recurring type has list of days, then get those days.
         $recurringWeekDays = $this->getWeekDaysListValue();
+        $weekDay = $this->getWeekDayValue();
+        $weekNumber = $this->getWeekNumberValue();
+        
         if($recurringWeekDays) {
             $daysCount = count($recurringWeekDays);
             for($i = 0; $i < $daysCount; $i++) {
@@ -365,8 +367,8 @@ class RecurringType {
             }
         }
         //Else if recurring type has day of week and step for it, then get this day.
-        elseif($this->getWeekDayValue() && $this->getWeekNumberValue()) {
-            $stamp = $this->_getDayOnWeek($dateStamp, $this->getWeekDayValue(), $this->getWeekNumberValue());
+        elseif(isset($weekDay) && $weekNumber) {
+            $stamp = $this->_getDayOnWeek($dateStamp, $weekDay, $weekNumber);
             if((!$start || $stamp >= $start) && (!$end|| $stamp < $end))
                 array_push($recurringDays, $stamp);
         }
