@@ -1,0 +1,118 @@
+{
+  "settings": {
+    "start_date": "2016-03-01 00:00:00",
+    "end_date": "2016-03-31 24:00:00"
+  },
+  "data": [
+    {
+      "id": "1",
+      "start_date": "2016-03-02 10:05:00",
+      "end_date": "2016-03-05 10:05:00",
+      "text": "Daily Test 1",
+      "rec_type": "day_1___#3",
+      "event_pid": "0",
+      "event_length": "10500",
+      "rec_pattern": "day_1___"
+    },
+    {
+      "id": "2",
+      "start_date": "2016-03-07 00:00:00",
+      "end_date": "2016-05-26 00:00:00",
+      "text": "Daily Test 2 End after ",
+      "rec_type": "day_2___#40",
+      "event_pid": "0",
+      "event_length": "300",
+      "rec_pattern": "day_2___"
+    },
+    {
+      "id": "3",
+      "start_date": "2016-02-10 00:00:00",
+      "end_date": "2016-03-11 00:00:00",
+      "text": "Daily Test 3 start before",
+      "rec_type": "day_3___#10",
+      "event_pid": "0",
+      "event_length": "300",
+      "rec_pattern": "day_3___"
+    },
+    {
+      "id": "4",
+      "start_date": "2016-02-23 00:00:00",
+      "end_date": "9999-02-01 00:00:00",
+      "text": "Daily Test 4 (work)",
+      "rec_type": "week_1___1,2,3,4,5#no",
+      "event_pid": "0",
+      "event_length": "300",
+      "rec_pattern": "week_1___1,2,3,4,5"
+    },
+    {
+      "id": "5",
+      "start_date": "2016-03-03 01:10:00",
+      "end_date": "2016-03-31 00:00:00",
+      "text": "Daily Test 5 (end by)",
+      "rec_type": "day_6___#",
+      "event_pid": "",
+      "event_length": "51600",
+      "rec_pattern": "day_6___"
+    },
+    {
+      "id": "6",
+      "start_date": "2016-03-04 21:30:00",
+      "end_date": "9999-02-01 00:00:00",
+      "text": "Daily test 6",
+      "rec_type": "day_2___#no",
+      "event_pid": "",
+      "event_length": "2400",
+      "rec_pattern": "day_2___"
+    },
+    {
+      "id": "7",
+      "start_date": "2016-02-29 23:25:00",
+      "end_date": "2016-03-01 00:00:00",
+      "text": "Common event 1",
+      "rec_type": "",
+      "event_pid": "",
+      "event_length": "",
+      "rec_pattern": ""
+    },
+    {
+      "id": "8",
+      "start_date": "2016-03-10 13:30:00",
+      "end_date": "2016-03-10 17:00:00",
+      "text": "Common event 2",
+      "rec_type": "",
+      "event_pid": "",
+      "event_length": "",
+      "rec_pattern": ""
+    },
+    {
+      "id": "9",
+      "start_date": "2016-04-01 00:00:00",
+      "end_date": "2016-04-01 00:05:00",
+      "text": "Common event 3",
+      "rec_type": "",
+      "event_pid": "",
+      "event_length": "",
+      "rec_pattern": ""
+    },
+    {
+      "id": "10",
+      "start_date": "2016-03-01 00:00:00",
+      "end_date": "2016-03-01 04:35:00",
+      "text": "Common event 4",
+      "rec_type": "",
+      "event_pid": "",
+      "event_length": "",
+      "rec_pattern": ""
+    },
+    {
+      "id": "11",
+      "start_date": "2016-03-31 00:00:00",
+      "end_date": "2016-04-01 00:00:00",
+      "text": "Common End 6",
+      "rec_type": "",
+      "event_pid": "",
+      "event_length": "",
+      "rec_pattern": ""
+    }
+  ]
+}

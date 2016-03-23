@@ -1,0 +1,68 @@
+{
+  "insert_data": [
+    {
+      "id": "1",
+      "start_date": "2015-02-04 11:00:00",
+      "end_date": "2015-02-04 19:30:00",
+      "text": "Event X1",
+      "rec_type": "",
+      "event_length": ""
+    },
+    {
+      "id": "2",
+      "start_date": "2020-07-09 11:00:00",
+      "end_date": "2020-07-09 19:20:00",
+      "text": "Event X2",
+      "rec_type": "day_1___#3",
+      "event_length": "600"
+    },
+    {
+      "id": "3",
+      "start_date": "2014-04-09 18:00:00",
+      "end_date": "2014-04-09 19:25:00",
+      "text": "Event X3",
+      "rec_type": "",
+      "event_length": ""
+    }
+  ],
+  "data": [
+    {
+      "id": 1,
+      "recurring_type": {
+        "each": "week",
+        "step": 2,
+        "days_of_week": "sunday,monday,tuesday,wednesday,thursday,friday,saturday"
+      },
+      "start_date": "2016-03-01 12:20:00",
+      "end_date": "9999-02-01 00:00:00",
+      "length": 300,
+      "text": "Test Week Event 1"
+    },
+    {
+      "id": 2,
+      "recurring_type": {
+        "each": "week",
+        "repeat": 17,
+        "step": 1,
+        "days_of_week": "monday,wednesday,thursday,friday"
+
+      },
+      "start_date": "2016-03-02 20:00:00",
+      "end_date": "2016-03-31 00:00:00",
+      "length": 300,
+      "text": "Test Week Event 2"
+    },
+    {
+      "id": 3,
+      "recurring_type": {
+        "each": "week",
+        "step": 3,
+        "days_of_week": "monday,wednesday"
+      },
+      "start_date": "2016-03-02 15:55:00",
+      "end_date": "2016-08-21 00:00:00",
+      "length": 600,
+      "text": "Test Week Event 3"
+    }
+  ]
+}

@@ -1,0 +1,88 @@
+{
+  "insert_data": [
+    {
+      "id": "1",
+      "start_date": "2015-02-04 11:00:00",
+      "end_date": "2015-02-04 19:30:00",
+      "text": "Event X1",
+      "rec_type": "",
+      "event_length": ""
+    },
+    {
+      "id": "2",
+      "start_date": "2020-07-09 11:00:00",
+      "end_date": "2020-07-09 19:20:00",
+      "text": "Event X2",
+      "rec_type": "day_1___#3",
+      "event_length": "600"
+    },
+    {
+      "id": "3",
+      "start_date": "2014-04-09 18:00:00",
+      "end_date": "2014-04-09 19:25:00",
+      "text": "Event X3",
+      "rec_type": "",
+      "event_length": ""
+    },
+    {
+      "id": "4",
+      "start_date": "2014-04-20 18:00:00",
+      "end_date": "2014-05-30 19:25:00",
+      "text": "Event X4",
+      "rec_type": "",
+      "event_length": ""
+    }
+  ],
+  "data": [
+    {
+      "id": 1,
+      "recurring_type": {
+        "each": "year",
+        "step": 1
+      },
+      "start_date": "2016-03-08 11:40:00",
+      "end_date": "9999-02-01 00:00:00",
+      "length": 6600,
+      "text": "Test Year 1"
+    },
+    {
+      "id": 2,
+      "recurring_type": {
+        "each": "year",
+        "repeat": 4,
+        "week_number": 1,
+        "step": 1,
+        "days_of_week": "monday"
+      },
+      "start_date": "2016-03-01 10:35:00",
+      "length": 30000,
+      "text": "Test Year 2"
+    },
+    {
+      "id": 3,
+      "recurring_type": {
+        "each": "year",
+        "step": 1,
+        "days_of_week": "sunday",
+        "week_number": 4
+      },
+      "start_date": "2016-12-01 22:00:00",
+      "end_date": "2019-04-21 00:00:00",
+      "length": 3900,
+      "text": "Test Year 3"
+    },
+    {
+      "id": 4,
+      "recurring_type": {
+        "each": "year",
+        "step": 1,
+        "days_of_week": "tuesday",
+        "week_number": 1
+      },
+      "start_date": "2016-01-01 10:40:00",
+      "end_date": "9999-02-01 00:00:00",
+      "length": 47700,
+      "text": "Test Year 4"
+    }
+  ]
+}

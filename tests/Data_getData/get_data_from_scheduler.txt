@@ -1,0 +1,40 @@
+Get source data:
+scheduler.toJSON();
+
+Get target data:
+function getSerrializedEvents(start, end){
+		var realEvs = scheduler.getEvents(start,end);
+		var evs = [];
+
+		var format = scheduler.templates.xml_format;
+
+		for(var i = 0; i < realEvs.length; i++){
+			var realEv = realEvs[i];
+			var ev = {};
+			for(var j in realEv){
+				if(j[0] == "_" || j[0] == "!") continue;
+				if(typeof realEv[j] == "object"){
+					if(realEv[j] instanceof Date)
+						ev[j] = format(realEv[j]);
+				}
+				else {
+					ev[j] = realEv[j];
+					if(j == "id"){
+						ev[j] += "";
+					}
+				}
+			}
+			var sharpIndex = ev.id.indexOf("#");
+			if(sharpIndex != -1) {
+				ev.id = ev.id.substring(0, sharpIndex);
+				var recEv = scheduler.getEvent(ev.id);
+				ev.rec_type = recEv.rec_type;
+				ev.event_length = recEv.event_length;
+				ev.event_pid = "0";
+			}
+
+			evs.push(ev);
+		}
+
+		return JSON.stringify(evs);
+}
