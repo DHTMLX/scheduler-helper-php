@@ -282,7 +282,6 @@ class RecurringType {
 
             //Add years.
             $recurringInterval["start_date_stamp"] = SchedulerHelperDate::addYears($recurringStartDateStamp, $differenceStartDates[$dateUnits["year"]]);
-            $recurringInterval["end_date_stamp"] = SchedulerHelperDate::addYears($recurringEndDateStamp, -$differenceEndDates[$dateUnits["year"]]);
 
 
             if ($type == self::REC_TYPE_YEAR)
@@ -290,7 +289,6 @@ class RecurringType {
 
             //Add months.
             $recurringInterval["start_date_stamp"] = SchedulerHelperDate::addMonths($recurringInterval["start_date_stamp"], $differenceStartDates[$dateUnits["month"]]);
-            $recurringInterval["end_date_stamp"] = SchedulerHelperDate::addMonths($recurringInterval["end_date_stamp"], -$differenceEndDates[$dateUnits["month"]]);
             if ($type == self::REC_TYPE_MONTH)
                 return $recurringInterval;
         }
