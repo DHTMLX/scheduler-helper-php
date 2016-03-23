@@ -35,8 +35,10 @@ class SchedulerHelperDate
         $dateUnits = self::$DATE_UNITS;
         $differenceArray = array();
 
-        foreach($dateUnits as $dateUnit)
-            $differenceArray[$dateUnit] = $firstDate->diff($secondDate, true)->format("%".$dateUnit);
+        foreach($dateUnits as $dateUnit) {
+            //diff function can't be used here because it gets difference in UTC
+            $differenceArray[$dateUnit] = abs($firstDate->format($dateUnit) - $secondDate->format($dateUnit));
+        }
 
         return $differenceArray;
     }

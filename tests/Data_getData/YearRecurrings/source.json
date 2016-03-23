@@ -53,6 +53,17 @@
       "event_pid": "0",
       "event_length": "300",
       "rec_pattern": "year_1_7_4_"
+    },
+    {
+      "start_date": "2016-01-01 00:00:00",
+      "end_date": "9999-02-01 00:00:00",
+      "text": "Year Event 6",
+      "id": "1",
+      "event_pid": "",
+      "event_length": "300",
+      "rec_pattern": "year_1_1_1_",
+      "rec_type": "year_1_1_1_#no",
+      "!nativeeditor_status": ""
     }
   ]
 }

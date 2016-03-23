@@ -44,6 +44,15 @@
       "id": "11",
       "rec_type": "year_1_7_4_#no",
       "event_length": 300
+    },
+    {
+      "start_date": "2016-01-04 00:00:00",
+      "end_date": "2016-01-04 00:05:00",
+      "event_pid": "0",
+      "text": "Year Event 6",
+      "id": "1",
+      "rec_type": "year_1_1_1_#no",
+      "event_length": 300
     }
   ]
 }

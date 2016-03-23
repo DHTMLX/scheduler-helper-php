@@ -1,0 +1,41 @@
+{
+  "settings": {
+    "start_date": "2016-03-01 00:00:00",
+    "end_date": "2016-04-01 00:00:00"
+  },
+  "data": [
+    {
+      "start_date": "2016-01-01 06:50:00",
+      "end_date": "9999-02-01 00:00:00",
+      "text": "Month Event 1",
+      "id": "2",
+      "event_pid": "",
+      "event_length": "25800",
+      "rec_pattern": "month_2___",
+      "rec_type": "month_2___#no",
+      "!nativeeditor_status": ""
+    },
+    {
+      "start_date": "2016-01-01 00:00:00",
+      "end_date": "9999-02-01 00:00:00",
+      "text": "Month Event 2",
+      "id": "3",
+      "event_pid": "",
+      "event_length": "300",
+      "rec_pattern": "month_1_1_1_",
+      "rec_type": "month_1_1_1_#no",
+      "!nativeeditor_status": ""
+    },
+    {
+      "start_date": "2016-01-02 08:00:00",
+      "end_date": "9999-02-01 00:00:00",
+      "text": "Month Event 3",
+      "id": "4",
+      "event_pid": "",
+      "event_length": "21600",
+      "rec_pattern": "month_2_0_2_",
+      "rec_type": "month_2_0_2_#no",
+      "!nativeeditor_status": ""
+    }
+  ]
+}
