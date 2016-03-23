@@ -1,5 +1,6 @@
 <?php
 namespace DHTMLX_Scheduler;
+use DateTime;
 use Exception;
 
 class RecurringType {
@@ -301,6 +302,36 @@ class RecurringType {
      * Get step to recurring day from current day of week in date.
      * @param $dateStamp
      * @param $recurringWeekDay
+     * @param $weekNumber
+     * @return int
+     */
+    private function _getDayOnWeek($dateStamp, $recurringWeekDay, $weekNumber = 0)
+    {
+        $date = new DateTime();
+        $date->setTimestamp($dateStamp);
+
+        $m = $date->format('m');
+        $y = $date->format('Y');
+        $date->setDate($y, $m, 1);
+
+        $weekDays = 0;
+        if ($weekNumber != 0) {
+            $weekDays = ($weekNumber - 1) * SchedulerHelperDate::DAYS_IN_WEEK;
+        }
+
+        $weekDay = SchedulerHelperDate::getDayOfWeek($dateStamp);
+        $newDay = $recurringWeekDay + $weekDays - $weekDay + 1;
+
+        $newDay = $newDay <= $weekDays ? $newDay + SchedulerHelperDate::DAYS_IN_WEEK : $newDay;
+        $date->setDate($y, $m, $newDay);
+
+        return $date->getTimestamp();
+    }
+
+    /**
+     * Get step to recurring day from current day of week in date.
+     * @param $dateStamp
+     * @param $recurringWeekDay
      * @return int
      */
     private function _getRecurringDayStep($dateStamp, $recurringWeekDay)
@@ -337,9 +368,7 @@ class RecurringType {
         }
         //Else if recurring type has day of week and step for it, then get this day.
         elseif($this->getWeekDayValue() && $this->getWeekNumberValue()) {
-            $dayStep = $this->_getRecurringDayStep($dateStamp, $this->getWeekDayValue());
-            $dayStep += (SchedulerHelperDate::DAYS_IN_WEEK * ($this->getWeekNumberValue() - 1));
-            $stamp = SchedulerHelperDate::addDays($dateStamp, $dayStep);
+            $stamp = $this->_getDayOnWeek($dateStamp, $this->getWeekDayValue(), $this->getWeekNumberValue());
             if((!$start || $stamp >= $start) && (!$end|| $stamp < $end))
                 array_push($recurringDays, $stamp);
         }
