@@ -271,7 +271,7 @@ class RecurringType {
             if($recurringStartDateStamp < $intervalStartDateStamp) {
                 $step = $this->_transpose_size[$type] * $this->getRecurringTypeStepValue();
                 $day = 24 * 60 * 60;
-                $delta = floor(($intervalStartDateStamp - $recurringStartDateStamp) / ($day * $step)) || 1;
+                $delta = floor(($intervalStartDateStamp - $recurringStartDateStamp) / ($day * $step));
                 $recurringInterval["start_date_stamp"] = $recurringStartDateStamp + $delta * $step * $day;
             }
         }

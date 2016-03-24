@@ -12,8 +12,7 @@
       "rec_type": "week_2___0,1,2,3,4,5,6#40",
       "event_pid": "0",
       "event_length": "21900",
-      "rec_pattern": "week_2___0,1,2,3,4,5,6",
-      "!nativeeditor_status": ""
+      "rec_pattern": "week_2___0,1,2,3,4,5,6"
     },
     {
       "id": "2",
@@ -21,10 +20,9 @@
       "end_date": "2016-03-27 00:00:00",
       "text": "Week event 2",
       "rec_type": "week_2___2,5#",
-      "event_pid": "",
+      "event_pid": "0",
       "event_length": "14400",
-      "rec_pattern": "week_2___2,5",
-      "!nativeeditor_status": ""
+      "rec_pattern": "week_2___2,5"
     },
     {
       "id": "3",
@@ -32,10 +30,9 @@
       "end_date": "9999-02-01 00:00:00",
       "text": "Week Event 3",
       "rec_type": "week_2___0,6#no",
-      "event_pid": "",
+      "event_pid": "0",
       "event_length": "300",
-      "rec_pattern": "week_2___0,6",
-      "!nativeeditor_status": ""
+      "rec_pattern": "week_2___0,6"
     },
     {
       "id": "4",
@@ -43,10 +40,9 @@
       "end_date": "2016-03-27 10:00:00",
       "text": "Week Event 4",
       "rec_type": "week_2___0,1,5#8",
-      "event_pid": "",
+      "event_pid": "0",
       "event_length": "18000",
-      "rec_pattern": "week_2___0,1,5",
-      "!nativeeditor_status": ""
+      "rec_pattern": "week_2___0,1,5"
     },
     {
       "id": "5",
@@ -54,10 +50,9 @@
       "end_date": "2016-04-27 00:00:00",
       "text": "Week Event 5",
       "rec_type": "week_1___3#",
-      "event_pid": "",
+      "event_pid": "0",
       "event_length": "300",
-      "rec_pattern": "week_1___3",
-      "!nativeeditor_status": ""
+      "rec_pattern": "week_1___3"
     },
     {
       "id": "6",
@@ -65,10 +60,19 @@
       "end_date": "9999-02-01 00:00:00",
       "text": "Week Event 6",
       "rec_type": "week_1___1,2,4,5#no",
-      "event_pid": "",
+      "event_pid": "0",
       "event_length": "300",
-      "rec_pattern": "week_1___1,2,4,5",
-      "!nativeeditor_status": ""
+      "rec_pattern": "week_1___1,2,4,5"
+    },
+    {
+      "id": "7",
+      "start_date": "2016-02-29 00:00:00",
+      "end_date": "9999-02-01 00:00:00",
+      "text": "Week Event 7",
+      "rec_type": "week_1___0,1,2,3,4,5,6#no",
+      "event_pid": "0",
+      "event_length": "86400",
+      "rec_pattern": "week_1___0,1,2,3,4,5,6"
     }
   ]
 }
