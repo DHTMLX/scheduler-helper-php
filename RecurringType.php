@@ -34,9 +34,9 @@ class RecurringType {
     private $_recurring_start_date_stamp;
     private $_recurring_end_date_stamp;
     
-    public static $start_on_monday = true;
+    private $_config = array();
 
-    public function __construct($recurringType, $recurringStartDateStamp, $recurringEndDateStamp)
+    public function __construct($recurringType, $recurringStartDateStamp, $recurringEndDateStamp, $config = array())
     {
         if(is_array($recurringType))
             $recurringType = self::parseRecurringDataArrayToString($recurringType);
@@ -44,6 +44,7 @@ class RecurringType {
         $this->_fields_values = self::_parseRecurringDataString($recurringType);
         $this->_recurring_start_date_stamp = $recurringStartDateStamp;
         $this->_recurring_end_date_stamp = $recurringEndDateStamp;
+        $this->_config = $config;
     }
 
     public static function getInstance($recurringTypeString, $recurringStartDateStamp, $recurringEndDateStamp) {
@@ -334,7 +335,7 @@ class RecurringType {
     private function _getRecurringDayStep($dateStamp, $recurringWeekDay)
     {
         $weekDay = SchedulerHelperDate::getDayOfWeek($dateStamp);
-        if(self::$start_on_monday) {
+        if($this->_config["start_on_monday"]) {
             $recurringWeekDay = $recurringWeekDay == 0 ? 7 : $recurringWeekDay;
         }
         $dayStep = $recurringWeekDay - $weekDay;
@@ -401,6 +402,7 @@ class RecurringType {
         $intervalStartDateStamp = $correctedInterval["start_date_stamp"];
         $intervalEndDateStamp = $correctedInterval["end_date_stamp"];
         $currentRecurringStartDateStamp = $intervalStartDateStamp;
+        $correcterRecurringStartDateStamp = $currentRecurringStartDateStamp;
         $recurringDates = array();
         $recurringStartDateStamp = $this->_recurring_start_date_stamp;
         $recurringEndDateStamp = $this->_recurring_end_date_stamp;
@@ -411,7 +413,7 @@ class RecurringType {
             (!is_null($countDates) && ($countRecurringCycles <= $countDates))
             || (
                 ($intervalStartDateStamp <= $currentRecurringStartDateStamp)
-                && ($currentRecurringStartDateStamp < $intervalEndDateStamp)
+                && ($correcterRecurringStartDateStamp < $intervalEndDateStamp)
             )
         ) {
             $countRecurringCycles++;
@@ -421,18 +423,22 @@ class RecurringType {
             switch($recType) {
                 case self::REC_TYPE_DAY:
                     $currentRecurringStartDateStamp = SchedulerHelperDate::addDays($currentRecurringStartDateStamp, $recurringTypeStep);
+                    $correcterRecurringStartDateStamp = $currentRecurringStartDateStamp;
                     break;
 
                 case self::REC_TYPE_WEEK:
                     $currentRecurringStartDateStamp = SchedulerHelperDate::addWeeks($currentRecurringStartDateStamp, $recurringTypeStep);
+                    $correcterRecurringStartDateStamp = SchedulerHelperDate::weekStart($currentRecurringStartDateStamp);
                     break;
 
                 case self::REC_TYPE_MONTH:
                     $currentRecurringStartDateStamp = SchedulerHelperDate::addMonths($currentRecurringStartDateStamp, $recurringTypeStep);
+                    $correcterRecurringStartDateStamp = SchedulerHelperDate::monthStart($currentRecurringStartDateStamp);
                     break;
 
                 case self::REC_TYPE_YEAR:
                     $currentRecurringStartDateStamp = SchedulerHelperDate::addYears($currentRecurringStartDateStamp, $recurringTypeStep);
+                    $correcterRecurringStartDateStamp = SchedulerHelperDate::yearStart($currentRecurringStartDateStamp);
                     break;
             }
         }
