@@ -1,0 +1,20 @@
+{
+  "settings": {
+    "start_date": "2016-03-01 00:00:00",
+    "end_date": "2016-03-31 24:00:00"
+  },
+  "data": [{ "id": "10", "start_date": "2016-03-02 00:00:00", "end_date": "2016-03-22 00:00:00", "text": "Day Event 1", "rec_type": "day_1___#20", "event_pid": "0", "event_length": "86400", "rec_pattern": "day_1___"},
+    { "id": "11", "start_date": "2016-03-01 00:00:00", "end_date": "2016-03-02 00:00:00", "text": "Day Event 1", "rec_type": "", "event_pid": "10", "event_length": "1457568000", "rec_pattern": ""},
+    { "id": "12", "start_date": "2016-03-31 00:00:00", "end_date": "2016-04-01 00:00:00", "text": "Day Event 1", "rec_type": "", "event_pid": "10", "event_length": "1457654400", "rec_pattern": ""},
+    { "id": "13", "start_date": "2016-03-16 00:00:00", "end_date": "2016-03-17 00:00:00", "text": "Day Event 1", "rec_type": "none", "event_pid": "10", "event_length": "1458086400", "rec_pattern": "none"},
+    { "id": "14", "start_date": "2016-03-21 00:00:00", "end_date": "2016-03-22 00:00:00", "text": "Day Event 1", "rec_type": "none", "event_pid": "10", "event_length": "1458518400", "rec_pattern": "none"},
+    { "id": "15", "start_date": "2016-03-24 00:00:00", "end_date": "2016-03-25 00:00:00", "text": "Day Event Changed Text", "rec_type": "", "event_pid": "10", "event_length": "1458345600", "rec_pattern": ""},
+    { "id": "16", "start_date": "2016-02-29 00:00:00", "end_date": "2016-03-01 00:00:00", "text": "Day Event 1", "rec_type": "", "event_pid": "10", "event_length": "1458000000", "rec_pattern": ""},
+    { "id": "17", "start_date": "2016-02-20 00:00:00", "end_date": "9999-02-01 00:00:00", "text": "Week Event 1", "rec_type": "week_2___0,1,2,6#no", "event_pid": "0", "event_length": "300", "rec_pattern": "week_2___0,1,2,6"},
+    { "id": "18", "start_date": "2016-03-19 00:00:00", "end_date": "2016-03-19 00:05:00", "text": "Week Event 1", "rec_type": "none", "event_pid": "17", "event_length": "1458345600", "rec_pattern": "none"},
+    { "id": "19", "start_date": "2016-03-16 00:00:00", "end_date": "2016-03-16 00:05:00", "text": "Week Event 1", "rec_type": "", "event_pid": "17", "event_length": "1458000000", "rec_pattern": ""},
+    { "id": "20", "start_date": "2016-02-01 00:00:00", "end_date": "9999-02-01 00:00:00", "text": "Month Event 1", "rec_type": "month_1_1_1_#no", "event_pid": "0", "event_length": "300", "rec_pattern": "month_1_1_1_"},
+    { "id": "21", "start_date": "2016-03-10 04:20:00", "end_date": "2016-03-10 13:20:00", "text": "Month Event 1 edited occurence", "rec_type": "", "event_pid": "20", "event_length": "1457308800", "rec_pattern": ""},
+    { "id": "22", "start_date": "2015-03-09 00:00:00", "end_date": "9999-02-01 00:00:00", "text": "Year Event 1", "rec_type": "year_1___#no", "event_pid": "0", "event_length": "300", "rec_pattern": "year_1___"},
+    { "id": "23", "start_date": "2016-03-17 00:00:00", "end_date": "2016-03-18 00:00:00", "text": "Year Event 1 Edited occurence", "rec_type": "", "event_pid": "22", "event_length": "1457481600", "rec_pattern": ""}]
+}

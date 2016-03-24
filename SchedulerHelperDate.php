@@ -77,6 +77,14 @@ class SchedulerHelperDate
         return $timestamp;
     }
 
+    static public function getTimestampFromUTCTimestamp($stamp, $serverDate){
+        $date = new DateTime();
+        $date->setTimezone(new \DateTimeZone("UTC"));
+        $date->setTimestamp($stamp);
+        $date = self::getDateTimestamp($date->format(self::FORMAT_DEFAULT), $serverDate);
+        return $date;
+    }
+
     static public function getDayOfWeek($timestamp) {
         $weekDay = getdate($timestamp)["wday"];
         return $weekDay;
@@ -108,6 +116,36 @@ class SchedulerHelperDate
 
     static public function addYears($timestamp, $count) {
         return self::addDate($timestamp, self::$INTERVAL_UNITS["year"], $count);
+    }
+
+    static public function weekStart($timestamp, $startOnMonday = true){
+        $shift = self::getDayOfWeek($timestamp);
+        if($startOnMonday){
+            if($shift === 0){
+                $shift = 6;
+            }
+            else{
+                $shift--;
+            }
+        }
+        return self::addDays($timestamp, -1*$shift);
+    }
+
+    static public function monthStart($timestamp){
+        $date = new DateTime();
+        $date->setTimestamp($timestamp);
+        $m = $date->format('m');
+        $y = $date->format('Y');
+        $date->setDate($y, $m, 1);
+        return $date->getTimestamp();
+    }
+
+    static public function yearStart($timestamp){
+        $date = new DateTime();
+        $date->setTimestamp($timestamp);
+        $y = $date->format('Y');
+        $date->setDate($y, 1, 1);
+        return $date->getTimestamp();
     }
 
 }

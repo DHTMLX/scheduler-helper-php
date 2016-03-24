@@ -26,6 +26,8 @@ class SchedulerHelperTest extends \PHPUnit_Framework_TestCase
             $schedHelper::FLD_ID => "id",
         ));
         
+        $schedHelper->config["debug"] = false;
+        
         return $schedHelper;
     }
     

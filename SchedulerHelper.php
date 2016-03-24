@@ -33,7 +33,8 @@ abstract class DHelper extends SchedulerHelperConnector
 	public $config = array(
 		"debug" => true,
 		"server_date" => false,
-		"start_on_monay" => true
+		"start_on_monday" => true,
+		"occurrence_timestamp_in_utc" => true
 	);
 
 	protected $_mapped_fields = array();
@@ -166,6 +167,11 @@ class Helper extends DHelper implements IHelper
 		return SchedulerHelperDate::getDateTimestamp($date, $this->config["server_date"]);
 	}
 
+	private function getTimestampFromUTCTimestamp($timestamp)
+	{
+		return SchedulerHelperDate::getTimestampFromUTCTimestamp($timestamp, $this->config["server_date"]);
+	}
+
 	/**
 	 * Get recurring events data exceptions. And prepare data to format: []
 	 * @return array
@@ -197,6 +203,9 @@ class Helper extends DHelper implements IHelper
 				$events[$eventParentId] = array();
 
 			$eventLength = $eventData[$this->getLengthFieldName()];
+			if($this->config["occurrence_timestamp_in_utc"]) {
+				$eventLength = $this->getTimestampFromUTCTimestamp($eventLength);
+			}
 			$events[$eventParentId][$eventLength] = $eventData;
 		}
 
@@ -365,8 +374,10 @@ class Helper extends DHelper implements IHelper
 		$recField = $this->getRecurringTypeFieldName();
 		$startField = $this->getStartDateFieldName();
 		$endField = $this->getEndDateFieldName();
-
-		RecurringType::$start_on_monday = $this->config["start_on_monay"];
+		$recConfig = array(
+			"start_on_monday" => $this->config["start_on_monday"]
+		);
+		
 		$recCount = count($recurringEvents);
 		for($i = 0; $i < $recCount; $i++) {
 			$eventData = $recurringEvents[$i];
@@ -375,7 +386,7 @@ class Helper extends DHelper implements IHelper
 			$recurringTypeData = $eventData[$recField];
 			$recurringStartDateStamp = $this->getDateTimestamp($eventData[$startField]);
 			$recurringEndDateStamp = $this->getDateTimestamp($eventData[$endField]);
-			$recurringTypeObj = new RecurringType($recurringTypeData, $recurringStartDateStamp, $recurringEndDateStamp);
+			$recurringTypeObj = new RecurringType($recurringTypeData, $recurringStartDateStamp, $recurringEndDateStamp, $recConfig);
 
 			//Get recurring dates by parsed format.
 			$recurringDatesStamps = $recurringTypeObj->getRecurringDates($intervalStartDateStamp, $intervalEndDateStamp);
