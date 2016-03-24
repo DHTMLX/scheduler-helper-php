@@ -77,6 +77,14 @@ class SchedulerHelperDate
         return $timestamp;
     }
 
+    static public function getTimestampFromUTCTimestamp($stamp, $serverDate){
+        $date = new DateTime();
+        $date->setTimezone(new \DateTimeZone("UTC"));
+        $date->setTimestamp($stamp);
+        $date = self::getDateTimestamp($date->format(self::FORMAT_DEFAULT), $serverDate);
+        return $date;
+    }
+
     static public function getDayOfWeek($timestamp) {
         $weekDay = getdate($timestamp)["wday"];
         return $weekDay;

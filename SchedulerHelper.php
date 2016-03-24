@@ -33,7 +33,8 @@ abstract class DHelper extends SchedulerHelperConnector
 	public $config = array(
 		"debug" => true,
 		"server_date" => false,
-		"start_on_monay" => true
+		"start_on_monay" => true,
+		"occurrence_timestamp_in_utc" => true
 	);
 
 	protected $_mapped_fields = array();
@@ -166,6 +167,11 @@ class Helper extends DHelper implements IHelper
 		return SchedulerHelperDate::getDateTimestamp($date, $this->config["server_date"]);
 	}
 
+	private function getTimestampFromUTCTimestamp($timestamp)
+	{
+		return SchedulerHelperDate::getTimestampFromUTCTimestamp($timestamp, $this->config["server_date"]);
+	}
+
 	/**
 	 * Get recurring events data exceptions. And prepare data to format: []
 	 * @return array
@@ -197,6 +203,9 @@ class Helper extends DHelper implements IHelper
 				$events[$eventParentId] = array();
 
 			$eventLength = $eventData[$this->getLengthFieldName()];
+			if($this->config["occurrence_timestamp_in_utc"]) {
+				$eventLength = $this->getTimestampFromUTCTimestamp($eventLength);
+			}
 			$events[$eventParentId][$eventLength] = $eventData;
 		}
 
