@@ -89,6 +89,18 @@ class SchedulerHelperDate
         $weekDay = getdate($timestamp)["wday"];
         return $weekDay;
     }
+    
+    static public function getDateInfo($timestamp)
+    {
+        $result = array();
+        $date = new DateTime();
+        $date->setTimestamp($timestamp);
+        foreach (self::$DATE_UNITS as $key => $value) {
+            $result[$key] = $date->format($value);
+        }
+
+        return $result;
+    }
 
     static public function addDate($timestamp, $unit, $count) {
         $date = new DateTime();
