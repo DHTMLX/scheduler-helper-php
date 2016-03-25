@@ -1,6 +1,15 @@
 {
   "data": [
     {
+      "start_date": "2016-01-04 00:00:00",
+      "end_date": "2016-01-04 00:05:00",
+      "event_pid": "0",
+      "text": "Year Event 6",
+      "id": "1",
+      "rec_type": "year_1_1_1_#no",
+      "event_length": "300"
+    },
+    {
       "start_date": "2016-01-01 00:00:00",
       "end_date": "2016-01-01 00:05:00",
       "event_pid": "0",
@@ -43,16 +52,25 @@
       "text": "Year Event 5",
       "id": "11",
       "rec_type": "year_1_7_4_#no",
-      "event_length": 300
+      "event_length": "300"
     },
     {
-      "start_date": "2016-01-04 00:00:00",
-      "end_date": "2016-01-04 00:05:00",
+      "start_date": "2016-01-04 09:00:00",
+      "end_date": "2016-01-04 10:30:00",
       "event_pid": "0",
-      "text": "Year Event 6",
-      "id": "1",
+      "text": "Year Event 7",
+      "id": "12",
       "rec_type": "year_1_1_1_#no",
-      "event_length": 300
+      "event_length": 5400
+    },
+    {
+      "start_date": "2016-01-11 09:00:00",
+      "end_date": "2016-01-11 13:05:00",
+      "event_pid": "0",
+      "text": "Year Event 8",
+      "id": "13",
+      "rec_type": "year_1_1_2_#no",
+      "event_length": 14700
     }
   ]
 }

@@ -261,36 +261,31 @@ class RecurringType {
         }
 
         //Correct end date interval if it smaller then recurring end date.
-        if ($intervalEndDateStamp > $recurringEndDateStamp){
+        if ($intervalEndDateStamp > $recurringEndDateStamp) {
             $intervalEndDateStamp = $recurringEndDateStamp;
             $recurringInterval["end_date_stamp"] = $intervalEndDateStamp;
         }
 
         $type = $this->getRecurringTypeValue();
-        //If recurring type is "year" then exit, else add months.
-        if ($type == self::REC_TYPE_DAY || $type == self::REC_TYPE_WEEK) {
-            if($recurringStartDateStamp < $intervalStartDateStamp) {
+        if ($recurringStartDateStamp < $intervalStartDateStamp) {
+            if ($type == self::REC_TYPE_DAY || $type == self::REC_TYPE_WEEK) {
                 $step = $this->_transpose_size[$type] * $this->getRecurringTypeStepValue();
                 $day = 24 * 60 * 60;
                 $delta = floor(($intervalStartDateStamp - $recurringStartDateStamp) / ($day * $step));
                 $recurringInterval["start_date_stamp"] = $recurringStartDateStamp + $delta * $step * $day;
+            } else {
+                $step = $this->_transpose_size[$type] * $this->getRecurringTypeStepValue();
+                $intStartDetails = SchedulerHelperDate::getDateInfo($intervalStartDateStamp);
+                $recStartDetails = SchedulerHelperDate::getDateInfo($recurringStartDateStamp);
+
+                $delta = ceil((($intStartDetails["year"] * 12 + $intStartDetails["month"]) - ($recStartDetails["year"] * 12 + $recStartDetails["month"])) / $step);
+
+                $date = new DateTime();
+                $date->setTimestamp($recurringStartDateStamp);
+
+                $date->setDate($recStartDetails["year"], $recStartDetails["month"] + $delta * $step, $recStartDetails["day"]);
+                $recurringInterval["start_date_stamp"] = $date->getTimestamp();
             }
-        }
-        else {
-            $differenceStartDates = SchedulerHelperDate::differenceBetweenDates($intervalStartDateStamp, $recurringStartDateStamp);
-            $dateUnits = SchedulerHelperDate::$DATE_UNITS;
-
-            //Add years.
-            $recurringInterval["start_date_stamp"] = SchedulerHelperDate::addYears($recurringStartDateStamp, $differenceStartDates[$dateUnits["year"]]);
-
-
-            if ($type == self::REC_TYPE_YEAR)
-                return $recurringInterval;
-
-            //Add months.
-            $recurringInterval["start_date_stamp"] = SchedulerHelperDate::addMonths($recurringInterval["start_date_stamp"], $differenceStartDates[$dateUnits["month"]]);
-            if ($type == self::REC_TYPE_MONTH)
-                return $recurringInterval;
         }
 
         return $recurringInterval;
