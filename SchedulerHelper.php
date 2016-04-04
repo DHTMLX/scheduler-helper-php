@@ -34,7 +34,7 @@ abstract class DHelper extends SchedulerHelperConnector
 		"debug" => true,
 		"server_date" => false,
 		"start_on_monday" => true,
-		"occurrence_timestamp_in_utc" => true
+		"occurrence_timestamp_in_utc" => false
 	);
 
 	protected $_mapped_fields = array();

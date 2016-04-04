@@ -66,10 +66,16 @@ For getting only fields that have set, you need just to set 'true' like second p
   ), true);
 ```
 
-For setting weather server time zone will be considered you should use server_date config(true by default). If true helper will use server time, else will use dates as it goes from database.
+For setting weather server time zone will be considered you should use server_date config(false by default). If true helper will use server time, else will use dates as it goes from database.
 
 ```php
   $helper->config["server_date"] = true;
+```
+
+For setting weather if recurring occurrence date is saved in UTC in database "occurrence_timestamp_in_utc" config can be used (false by default). If true helper processes exceptions dates as UTC.
+
+```php
+  $helper->config["occurrence_timestamp_in_utc"] = true;
 ```
 
 To save data to the database, use the method 'saveData([dataArray])':
