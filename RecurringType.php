@@ -272,7 +272,7 @@ class RecurringType {
                 $step = $this->_transpose_size[$type] * $this->getRecurringTypeStepValue();
                 $day = 24 * 60 * 60;
                 $delta = floor(($intervalStartDateStamp - $recurringStartDateStamp) / ($day * $step));
-                $recurringInterval["start_date_stamp"] = $recurringStartDateStamp + $delta * $step * $day;
+                $recurringInterval["start_date_stamp"] = SchedulerHelperDate::addDays($recurringStartDateStamp, $delta*$step);
             } else {
                 $step = $this->_transpose_size[$type] * $this->getRecurringTypeStepValue();
                 $intStartDetails = SchedulerHelperDate::getDateInfo($intervalStartDateStamp);
