@@ -27,12 +27,13 @@ class SchedulerHelperTest extends \PHPUnit_Framework_TestCase
         ));
         
         $schedHelper->config["debug"] = false;
-        
+        $schedHelper->config["occurrence_timestamp_in_utc"] = true;
         return $schedHelper;
     }
     
     public function __construct()
     {
+        date_default_timezone_set('Europe/Minsk');
         $this->_logger = new Logger();
 
         $this->_baseHelper = new TestBaseHelper(array(
