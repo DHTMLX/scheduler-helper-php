@@ -1,0 +1,12 @@
+{
+  "settings": {
+    "start_date": "2016-07-01 08:00:00",
+    "end_date": "2016-07-20 23:59:59"
+  },
+  "data":[{ "id": "65", "start_date": "2016-06-22 08:00:00", "end_date": "9999-02-01 00:00:00", "text": "1st Monday every 1st month", "rec_type": "month_1_1_1_#no", "event_pid": "0", "event_length": "3600", "rec_pattern": "month_1_1_1_"},
+    { "id": "66", "start_date": "2016-06-02 00:00:00", "end_date": "9999-02-01 00:00:00", "text": "2nd Day every 1st month", "rec_type": "month_1___#no", "event_pid": "", "event_length": "300", "rec_pattern": "month_1___"},
+    { "id": "67", "start_date": "2016-06-04 00:00:00", "end_date": "9999-02-01 00:00:00", "text": "Every 4th day every 2nd month", "rec_type": "month_2___#no", "event_pid": "", "event_length": "300", "rec_pattern": "month_2___"},
+    { "id": "68", "start_date": "2016-06-04 00:00:00", "end_date": "9999-02-01 00:00:00", "text": "4th day every 1st month", "rec_type": "month_1___#no", "event_pid": "", "event_length": "300", "rec_pattern": "month_1___"},
+    { "id": "69", "start_date": "2016-06-16 05:00:00", "end_date": "9999-02-01 00:00:00", "text": "Every 3rd wednesday every 2nd month", "rec_type": "month_2_3_3_#no", "event_pid": "", "event_length": "21600", "rec_pattern": "month_2_3_3_"},
+    { "id": "70", "start_date": "2016-06-20 10:00:00", "end_date": "9999-02-01 00:00:00", "text": "20th day every 1st month", "rec_type": "month_1___#no", "event_pid": "", "event_length": "14400", "rec_pattern": "month_1___"}]
+}

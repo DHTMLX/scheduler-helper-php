@@ -285,6 +285,10 @@ class RecurringType {
 
                 $date->setDate($recStartDetails["year"], $recStartDetails["month"] + $delta * $step, $recStartDetails["day"]);
                 $recurringInterval["start_date_stamp"] = $date->getTimestamp();
+                $weekNumber = $this->getWeekNumberValue();
+                if ($weekNumber)
+                    $recurringInterval["start_date_stamp"] =
+                        $this->_getDayOnWeek($recurringInterval["start_date_stamp"], $this->getWeekDayValue(), $weekNumber);
             }
         }
 

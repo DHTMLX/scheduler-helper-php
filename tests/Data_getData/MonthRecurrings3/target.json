@@ -1,0 +1,3 @@
+{
+  "data": [{"start_date":"2016-07-04 08:00:00","end_date":"2016-07-04 09:00:00","event_pid":"0","text":"1st Monday every 1st month","id":"65","rec_type":"month_1_1_1_#no","event_length":"3600"},{"start_date":"2016-07-02 00:00:00","end_date":"2016-07-02 00:05:00","event_pid":"0","text":"2nd Day every 1st month","id":"66","rec_type":"month_1___#no","event_length":"300"},{"start_date":"2016-07-04 00:00:00","end_date":"2016-07-04 00:05:00","event_pid":"0","text":"4th day every 1st month","id":"68","rec_type":"month_1___#no","event_length":"300"},{"start_date":"2016-07-20 10:00:00","end_date":"2016-07-20 14:00:00","event_pid":"0","text":"20th day every 1st month","id":"70","rec_type":"month_1___#no","event_length":"14400"}]
+}
