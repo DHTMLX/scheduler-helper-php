@@ -386,6 +386,13 @@ class Helper extends DHelper implements IHelper
 			$recurringTypeData = $eventData[$recField];
 			$recurringStartDateStamp = $this->getDateTimestamp($eventData[$startField]);
 			$recurringEndDateStamp = $this->getDateTimestamp($eventData[$endField]);
+			
+			// count == 'NaN' will crash run into a timeout.
+			// skip all events with count == 'Nan'
+		        if (strpos($recurringTypeData, 'NaN') > 0) {
+        			continue;
+            		}
+			
 			$recurringTypeObj = new RecurringType($recurringTypeData, $recurringStartDateStamp, $recurringEndDateStamp, $recConfig);
 
 			//Get recurring dates by parsed format.
