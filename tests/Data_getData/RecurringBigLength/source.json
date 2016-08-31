@@ -1,0 +1,8 @@
+{
+  "settings": {
+    "start_date": "2016-08-12 17:55:00",
+    "end_date": "2016-08-15 23:59:59"
+  },
+  "data":[{ "id": "105", "start_date": "2016-08-09 11:40:00", "end_date": "2016-08-12 11:40:00", "text": "not working", "rec_type": "day_1___#3", "event_pid": "0", "event_length": "169200", "type": "1", "rec_pattern": "day_1___"},
+    { "id": "106", "start_date": "2016-08-09 11:20:00", "end_date": "2016-08-13 10:40:00", "text": "this works", "rec_type": "", "event_pid": "", "event_length": "", "type": "1", "rec_pattern": ""}]
+}
