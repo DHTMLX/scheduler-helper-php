@@ -235,7 +235,7 @@ class Helper extends DHelper implements IHelper
 				    OR ".$this->getRecurringTypeFieldName()." = '".RecurringType::IS_RECURRING_BREAK."'
 				    OR ".$this->getRecurringTypeFieldName()." IS NULL
 				)
-				AND ".$this->getLengthFieldName()." = '0'
+				AND (".$this->getLengthFieldName()." = '0' OR ".$this->getLengthFieldName()." is NULL)
         ";
 
 		$query = $this->getConnection()->prepare($getEventsSql);
