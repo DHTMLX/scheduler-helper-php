@@ -269,33 +269,43 @@ class Helper extends DHelper implements IHelper
 	 * @return array
 	 */
 	private function _getRecurringEventsByInterval($startDate, $endDate)
-	{
-		$getEventsSql = "
+    {
+        $getEventsSql = "
 			SELECT
 				*
 			FROM
-				".$this->getTablename()."
+				" . $this->getTablename() . "
 			WHERE
 			    (
-                    (
-                        ".$this->getEndDateFieldName()." >= '{$startDate}'
-                        AND ".$this->getStartDateFieldName()." <= '{$endDate}'
-                    )
-                )
-                AND (
-				    ".$this->getRecurringTypeFieldName()." != '".RecurringType::IS_RECURRING_EXCEPTION."'
-				    AND ".$this->getRecurringTypeFieldName()." != '".RecurringType::IS_RECURRING_BREAK."'
-				    AND ".$this->getRecurringTypeFieldName()." IS NOT NULL
+				    " . $this->getRecurringTypeFieldName() . " != '" . RecurringType::IS_RECURRING_EXCEPTION . "'
+				    AND " . $this->getRecurringTypeFieldName() . " != '" . RecurringType::IS_RECURRING_BREAK . "'
+				    AND " . $this->getRecurringTypeFieldName() . " IS NOT NULL
 				)
-				AND ".$this->getLengthFieldName()." != '0'
+				AND " . $this->getLengthFieldName() . " != '0'
         ";
 
-		$query = $this->getConnection()->prepare($getEventsSql);
-		$query->execute();
+        $query = $this->getConnection()->prepare($getEventsSql);
+        $query->execute();
         $data = $query->fetchAll();
         $this->closeConnection();
-		return $data;
-	}
+
+        $startDateFieldName = $this->getStartDateFieldName();
+        $endDateFieldName = $this->getEndDateFieldName();
+        $lengthFieldName = $this->getLengthFieldName();
+
+        $startStamp = $this->getDateTimestamp($startDate);
+        $endStamp = $this->getDateTimestamp($endDate);
+
+        $data = array_filter($data, function ($el) use ($startDateFieldName, $endDateFieldName, $lengthFieldName, $startStamp, $endStamp) {
+            $evStart = $this->getDateTimestamp($el[$startDateFieldName]);
+            $evEnd = $this->getDateTimestamp($el[$endDateFieldName]);
+            $evLength = $el[$lengthFieldName];
+
+            return $evEnd + $evLength > $startStamp && $evStart < $endStamp;
+        });
+
+        return $data;
+    }
 
 	/**
 	 * Exclude event extra data.
@@ -374,6 +384,7 @@ class Helper extends DHelper implements IHelper
 		$recField = $this->getRecurringTypeFieldName();
 		$startField = $this->getStartDateFieldName();
 		$endField = $this->getEndDateFieldName();
+        $lengthField = $this->getLengthFieldName();
 		$recConfig = array(
 			"start_on_monday" => $this->config["start_on_monday"]
 		);
@@ -384,9 +395,10 @@ class Helper extends DHelper implements IHelper
 
 			//Parse recurring data format.
 			$recurringTypeData = $eventData[$recField];
+            $recLength = $eventData[$lengthField];
 			$recurringStartDateStamp = $this->getDateTimestamp($eventData[$startField]);
 			$recurringEndDateStamp = $this->getDateTimestamp($eventData[$endField]);
-			$recurringTypeObj = new RecurringType($recurringTypeData, $recurringStartDateStamp, $recurringEndDateStamp, $recConfig);
+			$recurringTypeObj = new RecurringType($recurringTypeData, $recurringStartDateStamp, $recurringEndDateStamp, $recLength, $recConfig);
 
 			//Get recurring dates by parsed format.
 			$recurringDatesStamps = $recurringTypeObj->getRecurringDates($intervalStartDateStamp, $intervalEndDateStamp);

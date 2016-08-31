@@ -33,10 +33,11 @@ class RecurringType {
     private $_fields_values = array();
     private $_recurring_start_date_stamp;
     private $_recurring_end_date_stamp;
+    private $_recurring_length;
     
     private $_config = array();
 
-    public function __construct($recurringType, $recurringStartDateStamp, $recurringEndDateStamp, $config = array())
+    public function __construct($recurringType, $recurringStartDateStamp, $recurringEndDateStamp, $recurringLength = 0, $config = array())
     {
         if(is_array($recurringType))
             $recurringType = self::parseRecurringDataArrayToString($recurringType);
@@ -44,6 +45,7 @@ class RecurringType {
         $this->_fields_values = self::_parseRecurringDataString($recurringType);
         $this->_recurring_start_date_stamp = $recurringStartDateStamp;
         $this->_recurring_end_date_stamp = $recurringEndDateStamp;
+        $this->_recurring_length = $recurringLength;
         $this->_config = $config;
     }
 
@@ -397,6 +399,7 @@ class RecurringType {
             return false;
 
         //Correct interval by recurring interval.
+        $intervalStartDateStamp -= $this->_recurring_length; //If event ends before interval but event is in interval because of length
         $correctedInterval = $this->_getCorrectedRecurringInterval($intervalStartDateStamp, $intervalEndDateStamp);
         $intervalStartDateStamp = $correctedInterval["start_date_stamp"];
         $intervalEndDateStamp = $correctedInterval["end_date_stamp"];
