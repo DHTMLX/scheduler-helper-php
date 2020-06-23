@@ -389,10 +389,7 @@ class Helper extends DHelper implements IHelper
 			"start_on_monday" => $this->config["start_on_monday"]
 		);
 		
-		$recCount = count($recurringEvents);
-		for($i = 0; $i < $recCount; $i++) {
-			$eventData = $recurringEvents[$i];
-
+		foreach($recurringEvents as $eventData) {
 			//Parse recurring data format.
 			$recurringTypeData = $eventData[$recField];
             $recLength = $eventData[$lengthField];
