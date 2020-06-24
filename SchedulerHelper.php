@@ -384,7 +384,7 @@ class Helper extends DHelper implements IHelper
 		$recField = $this->getRecurringTypeFieldName();
 		$startField = $this->getStartDateFieldName();
 		$endField = $this->getEndDateFieldName();
-        $lengthField = $this->getLengthFieldName();
+		$lengthField = $this->getLengthFieldName();
 		$recConfig = array(
 			"start_on_monday" => $this->config["start_on_monday"]
 		);
@@ -392,7 +392,7 @@ class Helper extends DHelper implements IHelper
 		foreach($recurringEvents as $eventData) {
 			//Parse recurring data format.
 			$recurringTypeData = $eventData[$recField];
-            $recLength = $eventData[$lengthField];
+			$recLength = $eventData[$lengthField];
 			$recurringStartDateStamp = $this->getDateTimestamp($eventData[$startField]);
 			$recurringEndDateStamp = $this->getDateTimestamp($eventData[$endField]);
 			$recurringTypeObj = new RecurringType($recurringTypeData, $recurringStartDateStamp, $recurringEndDateStamp, $recLength, $recConfig);
