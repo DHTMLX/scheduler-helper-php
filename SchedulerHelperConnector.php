@@ -5,13 +5,14 @@ use PDO, Exception;
 
 class SchedulerHelperConnector
 {
-    private $_dbsm, $_host, $_db_name, $_user, $_password, $_table_name;
+    private $_dbsm, $_host, $_port, $_db_name, $_user, $_password, $_table_name;
     private $_PDO;
 
     protected function __construct($configs = array())
     {
         $this->_dbsm = isset($configs["dbsm"]) ? $configs["dbsm"] : "mysql";
         $this->_host = isset($configs["host"]) ? $configs["host"] : "localhost";
+        $this->_port = isset($configs["port"]) ? $configs["port"] : "3306";
         $this->_db_name = $configs["db_name"];
         $this->_user = $configs["user"];
         $this->_password = $configs["password"];
@@ -25,7 +26,7 @@ class SchedulerHelperConnector
 
     private function getConfigStringPDO()
     {
-        return "{$this->_dbsm}:host={$this->_host};dbname={$this->_db_name}";
+        return "{$this->_dbsm}:host={$this->_host};port={$this->_port};dbname={$this->_db_name}";
     }
 
     public function getConnection()
