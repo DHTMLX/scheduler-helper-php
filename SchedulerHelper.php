@@ -5,7 +5,6 @@ require_once "SchedulerHelperDate.php";
 require_once "SchedulerHelperConnector.php";
 require_once "RecurringType.php";
 
-use Closure;
 use PDO, Exception;
 
 abstract class DHelper extends SchedulerHelperConnector
@@ -140,7 +139,7 @@ abstract class DHelper extends SchedulerHelperConnector
 
 interface IHelper
 {
-	public function getData($startDate, $endDate, $closure);
+	public function getData($startDate, $endDate);
 	public function saveData($dataArray);
 	public function deleteById($id);
 }
@@ -218,10 +217,9 @@ class Helper extends DHelper implements IHelper
 	 * Get simple events by interval.
 	 * @param $startDate
 	 * @param $endDate
-	 * @param $closure Function which can extend the sql
 	 * @return array
 	 */
-	private function _getSimpleEventsByInterval($startDate, $endDate, $closure) {
+	private function _getSimpleEventsByInterval($startDate, $endDate) {
 		$getEventsSql = "
 			SELECT
 				*
@@ -239,10 +237,6 @@ class Helper extends DHelper implements IHelper
 				)
 				AND (".$this->getLengthFieldName()." = '0' OR ".$this->getLengthFieldName()." is NULL)
         ";
-
-		if(!empty($closure) && $closure instanceof Closure) {
-			$getEventsSql .= $closure->call($this);
-		}
 
 		$query = $this->getConnection()->prepare($getEventsSql);
 		$query->execute();
@@ -272,10 +266,9 @@ class Helper extends DHelper implements IHelper
 	 * Get recurring events data by interval.
 	 * @param $startDate
 	 * @param $endDate
-	 * @param $closure Function which can extend the sql
 	 * @return array
 	 */
-	private function _getRecurringEventsByInterval($startDate, $endDate, $closure)
+	private function _getRecurringEventsByInterval($startDate, $endDate)
     {
         $getEventsSql = "
 			SELECT
@@ -290,10 +283,6 @@ class Helper extends DHelper implements IHelper
 				)
 				AND " . $this->getLengthFieldName() . " != '0'
         ";
-
-		if(!empty($closure) && $closure instanceof Closure) {
-			$getEventsSql .= $closure->call($this);
-		}
 
         $query = $this->getConnection()->prepare($getEventsSql);
         $query->execute();
@@ -381,14 +370,13 @@ class Helper extends DHelper implements IHelper
 	 * Get recurring events data by interval.
 	 * @param $startDate
 	 * @param $endDate
-	 * @param $closure Function which can extend the sql
 	 * @return array
 	 */
-	public function getData($startDate, $endDate, $closure)
+	public function getData($startDate, $endDate)
 	{
 		$eventsData = array();
 		$recurringEventsExceptions = $this->_getRecurringEventsExceptionsByInterval();
-		$recurringEvents = $this->_getRecurringEventsByInterval($startDate, $endDate, $closure);
+		$recurringEvents = $this->_getRecurringEventsByInterval($startDate, $endDate);
 
 		$intervalStartDateStamp = $this->getDateTimestamp($startDate);
 		$intervalEndDateStamp = $this->getDateTimestamp($endDate);
@@ -418,7 +406,7 @@ class Helper extends DHelper implements IHelper
 		}
 
 		//Add simple events.
-		$simpleEvents = $this->_getSimpleEventsByInterval($startDate, $endDate, $closure);
+		$simpleEvents = $this->_getSimpleEventsByInterval($startDate, $endDate);
 		$simpleEvents = $this->_prepareSimpleEvents($simpleEvents);
 		$eventsData = array_merge($eventsData, $simpleEvents);
 
